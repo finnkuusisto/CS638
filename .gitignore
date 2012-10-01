@@ -1,0 +1,17 @@
+#################
+# Eclipse stuff #
+#################
+.project
+.classpath
+.settings
+
+###################
+# Play! Framework #
+###################
+logs
+project/project
+project/target
+target
+tmp
+.history
+dist
