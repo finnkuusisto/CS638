@@ -1,0 +1,24 @@
+@(groups: List[UserGroup])
+
+@main("CS 638 Web Application") {
+
+<ul class="nav nav-tabs">
+    <li><a href="@routes.Lists.users()">Users</a></li>
+    <li class="active"><a href="@routes.Lists.groups()">Groups</a></li>
+    <li><a href="#">Events</a></li>
+</ul>
+
+<div class="container-fluid">
+
+    <legend>@groups.size() Group(s)</legend>
+    @for(group <- groups) {
+        <div class="well">
+            <p class="lead">@group.name</p>
+            <p>@group.creatorUsername</p>
+            <p>@group.description</p>
+        </div>
+    }
+    
+</div>
+    
+}

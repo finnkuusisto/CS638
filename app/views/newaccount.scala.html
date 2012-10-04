@@ -1,0 +1,36 @@
+@(form: Form[Application.Account])
+
+@main("CS 638 Web Application") {
+
+<div class="container-fluid">
+
+    @if(form.hasGlobalErrors) {
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            @form.globalError.message
+        </div>
+    }
+
+    @if(flash.contains("success")) {
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            @flash.get("success")
+        </div>
+    }
+
+    <form action="@routes.Application.createAccount()" method="post">
+        <legend>Create new account</legend>
+        <label></label>
+        <input type="text" placeholder="Username" name="username">
+        <label></label>
+        <input type="text" placeholder="Email" name="email">
+        <label></label>
+        <input type="password" placeholder="Password" name="password">
+        <label></label>
+        <button class="btn btn-primary" type="submit">Create</button>
+        <a class="btn" href="@routes.Application.index()">Cancel</a>
+    </form>
+
+</div>
+
+}

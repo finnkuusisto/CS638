@@ -1,0 +1,23 @@
+@(users: List[UserInfo])
+
+@main("CS 638 Web Application") {
+
+<ul class="nav nav-tabs">
+    <li class="active"><a href="@routes.Lists.users()">Users</a></li>
+    <li><a href="@routes.Lists.groups()">Groups</a></li>
+    <li><a href="#">Events</a></li>
+</ul>
+
+<div class="container-fluid">
+
+    <legend>@users.size() User(s)</legend>
+    @for(user <- users) {
+        <div class="well">
+            <p class="lead">@user.username</p>
+            <a href="mailto:@user.email">@user.email</a>
+        </div>
+    }
+    
+</div>
+    
+}
