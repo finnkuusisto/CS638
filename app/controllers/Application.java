@@ -1,5 +1,6 @@
 package controllers;
 
+import models.EventInfo;
 import models.UserInfo;
 import play.*;
 import play.data.*;
@@ -100,6 +101,40 @@ public class Application extends Controller {
     		UserInfo.create(account.username, account.email, account.password);
     		flash("success", "Account created");
     		return redirect(routes.Application.login());
+    	}
+    }
+    
+    
+    ////////////////////
+    //Event Creation//
+    ////////////////////
+    
+    public static class Event {
+    	
+    	public String name;
+    	public String description;
+    	public double distance;
+    	
+    	public String validate() {
+    		return null;
+    	}
+    	
+    }
+    
+    public static Result newEvent() {
+    	return ok(newevent.render(form(Event.class)));
+    }
+    
+    public static Result createEvent() {
+    	Form<Event> eventForm = form(Event.class).bindFromRequest();
+    	if (eventForm.hasErrors()) {
+    		return badRequest(newevent.render(eventForm));
+    	}
+    	else {
+    		Event event = eventForm.get();
+    		EventInfo.create(session().get("username"),event.name, event.description, event.distance);
+    		flash("success", "Event created");
+    		return redirect(routes.Application.index());
     	}
     }
 

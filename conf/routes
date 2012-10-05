@@ -14,11 +14,16 @@ GET     /logout                     controllers.Application.logout()
 GET     /new_account                controllers.Application.newAccount()
 POST    /new_account                controllers.Application.createAccount()
 
+# Account creation
+GET     /new_event             	    controllers.Application.newEvent()
+POST    /new_event                  controllers.Application.createEvent()
+
+
 # Lists
 GET     /lists                      controllers.Lists.index()
 GET     /lists/users                controllers.Lists.users()
 GET     /lists/groups               controllers.Lists.groups()
-#GET     /lists/events               controllers.Lists.events()
+GET     /lists/events               controllers.Lists.events()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

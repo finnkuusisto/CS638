@@ -1,0 +1,28 @@
+@(events: List[EventInfo])
+
+@main("CS 638 Web Application") {
+
+<ul class="nav nav-tabs">
+    <li><a href="@routes.Lists.users()">Users</a></li>
+    <li><a href="@routes.Lists.groups()">Groups</a></li>
+    <li class="active"><a href="@routes.Lists.events()">Events</a></li>
+</ul>
+
+<div class="container-fluid">
+
+    <legend>@events.size() Event(s)</legend>
+    @for(event <- events) {
+        <div class="well">
+            <p class="lead">@event.name</p>
+            <p>@event.creatorUsername</p>
+            <p>@event.description</p>
+            <p>@event.distance</p>
+        </div>
+    }
+    
+     <a href="@routes.Application.newEvent()">Create Event</a>
+    
+    
+</div>
+    
+}

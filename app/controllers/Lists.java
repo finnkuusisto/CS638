@@ -23,5 +23,9 @@ public class Lists extends Controller {
 	public  static Result groups() {
 		return ok(grouplist.render(UserGroup.findAll()));
 	}
+	
+	public  static Result events() {
+		return ok(eventlist.render(EventInfo.findAll()));
+	}
 
 }
