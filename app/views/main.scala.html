@@ -54,7 +54,9 @@
                                     <li><a href="#">One more separated link</a></li>
                                 </ul>
                             </li>
-                            <li><a href="@routes.Application.logout()">logout</a></li>
+ 							@if(session.contains("username")){             
+                            	<li><a href="@routes.Application.logout()">logout</a></li>
+                            }
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
