@@ -22,7 +22,6 @@ public class UserInfo extends Model {
     @Id
     public String username;
     public String email;
-    
     public String firstName;
     public String lastName;
     

@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import play.db.ebean.Model;
 
@@ -15,6 +17,7 @@ public class EventInfo extends Model {
 
 	@Id
 	public String id;
+	
 	public String creatorUsername;
 	public String name;
 	public String description;
@@ -49,6 +52,10 @@ public class EventInfo extends Model {
     	group.save();
     }
 
+    public static List<EventInfo> findByID(String id) {
+    	return find.where().eq("id", id).findList();
+    }
+    
     public static List<EventInfo> findByCreator(String username) {
     	return find.where().eq("creatorUsername", username).findList();
     }
