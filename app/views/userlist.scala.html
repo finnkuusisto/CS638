@@ -13,7 +13,7 @@
     <legend>@users.size() User(s)</legend>
     @for(user <- users) {
         <div class="well">
-            <p class="lead">@user.username</p>
+            <p class="lead"><a href="@routes.Info.viewUser(user.username)">@user.username</a></p>
             <a href="mailto:@user.email">@user.email</a>
         </div>
     }

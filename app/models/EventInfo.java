@@ -52,8 +52,8 @@ public class EventInfo extends Model {
     	group.save();
     }
 
-    public static List<EventInfo> findByID(String id) {
-    	return find.where().eq("id", id).findList();
+    public static EventInfo findByID(String id) {
+    	return find.where().eq("id", id).findUnique();
     }
     
     public static List<EventInfo> findByCreator(String username) {

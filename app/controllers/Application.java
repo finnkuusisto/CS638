@@ -1,6 +1,7 @@
 package controllers;
 
 import models.EventInfo;
+import models.UserGroup;
 import models.UserInfo;
 import play.*;
 import play.data.*;
@@ -104,6 +105,40 @@ public class Application extends Controller {
     	}
     }
     
+    ////////////////////
+    //Group Creation//
+    ////////////////////
+    
+    public static class Group {
+    	
+    	public String name;
+    	public String description;
+    	
+    	public String validate() {
+    		//TODO validate this shiz
+    		return null;
+    	}
+    	
+    }
+    
+    public static Result newGroup() {
+    	return ok(newgroup.render(form(Group.class)));
+    }
+    
+    public static Result createGroup() {
+    	Form<Group> groupForm = form(Group.class).bindFromRequest();
+    	if (groupForm.hasErrors()) {
+    		return badRequest(newgroup.render(groupForm));
+    	}
+    	else {
+    		Group group = groupForm.get();
+    		UserGroup.create(session().get("username"), group.name,
+    				group.description);
+    		flash("success", "Group created");
+    		return redirect(routes.Application.index());
+    	}
+    }
+    
     
     ////////////////////
     //Event Creation//
@@ -116,6 +151,7 @@ public class Application extends Controller {
     	public double distance;
     	
     	public String validate() {
+    		//TODO validate this shiz
     		return null;
     	}
     	
@@ -132,7 +168,8 @@ public class Application extends Controller {
     	}
     	else {
     		Event event = eventForm.get();
-    		EventInfo.create(session().get("username"),event.name, event.description, event.distance);
+    		EventInfo.create(session().get("username"), event.name,
+    				event.description, event.distance);
     		flash("success", "Event created");
     		return redirect(routes.Application.index());
     	}

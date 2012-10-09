@@ -2,14 +2,14 @@
 
 @main("CS 638 Web Application") {
 
-	<div class="container-fluid">
+    <div class="container-fluid">
          <div class="well">
             <p class="lead">@event.name</p>
-            <p>@event.creatorUsername</p>
+            <p><a href="@routes.Info.viewUser(event.creatorUsername)">@event.creatorUsername</a></p>
             <p>@event.description</p>
             <p>Distance @event.distance</p>
             
         </div>
-</div>
-    }
+    </div>
     
+}

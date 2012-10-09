@@ -40,14 +40,19 @@ public class UserGroup extends Model {
         return find.all();
     }
     
+    
+    public static List<UserGroup> findByCreator(String username) {
+    	return find.where().eq("creatorUsername", username).findList();
+    }
+    
+    public static UserGroup findByID(String id) {
+    	return find.where().eq("id", id).findUnique();
+    }
+    
     public static void create(String creatorUsername, String name,
     		String description) {
     	UserGroup group = new UserGroup(creatorUsername, name, description);
     	group.save();
-    }
-    
-    public static List<UserGroup> findByCreator(String username) {
-    	return find.where().eq("creatorUsername", username).findList();
     }
 
 }

@@ -13,7 +13,8 @@
     <legend>@events.size() Event(s)</legend>
     @for(event <- events) {
         <div class="well">
-                <a href="@routes.Info.viewEvent(event.id)">@event.name</a>
+            <p class="lead"><a href="@routes.Info.viewEvent(event.id)">@event.name</a></p>
+            <p>@event.description</p>
         </div>
     }
     
