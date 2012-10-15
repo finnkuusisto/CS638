@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.regex.Pattern;
+
 import models.EventInfo;
 import models.UserGroup;
 import models.UserInfo;
@@ -74,15 +76,22 @@ public class Application extends Controller {
     	public String email;
     	public String password;
     	
+    	private static String emailRegex =
+    			"[a-zA-Z0-9.!#$%&'*+-/=?_`{}~|^]+@[a-zA-Z0-9.-]+\\.[A-Za-z]+";
+    	
     	public String validate() {
     		if (!UserInfo.usernameAvailable(username)) {
     			return "Username already taken";
     		}
-    		//TODO validate email
     		else if (!UserInfo.emailAvailable(email)) {
     			return "Account already created with that email";
     		}
-    		//TODO validate password
+    		else if (email == null || !email.matches(emailRegex)) {
+    			return "Invalid email";
+    		}
+    		else if (password == null || password.length() <= 0) {
+    			return "Invalid password";
+    		}
     		return null;
     	}
     	

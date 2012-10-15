@@ -21,9 +21,9 @@
     <form action="@routes.Application.authenticate()" method="post">
         <legend>Sign in</legend>
         <label></label>
-        <input type="text" placeholder="Username" name="username">
+        <input type="text" placeholder="Username" name="username" value=@form("username").value>
         <label></label>
-        <input type="password" placeholder="Password" name="password">
+        <input type="password" placeholder="Password" name="password" value=@form("password").value>
         <label></label>
         <button class="btn btn-primary" type="submit">Sign in</button>
     </form>
