@@ -13,8 +13,8 @@
     <legend>@groups.size() Group(s)</legend>
     @for(group <- groups) {
         <div class="well">
-            <p class="lead">@group.name</p>
-            <p>@group.creatorUsername</p>
+            <p class="lead"><a href="@routes.Info.viewGroup(group.id)">@group.name</a></p>
+            <p><a href="@routes.Info.viewUser(group.creatorUsername)">@group.creatorUsername</a></p>
             <p>@group.description</p>
         </div>
     }

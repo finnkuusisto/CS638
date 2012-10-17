@@ -78,6 +78,7 @@ public class Application extends Controller {
     	
     	private static String emailRegex =
     			"[a-zA-Z0-9.!#$%&'*+-/=?_`{}~|^]+@[a-zA-Z0-9.-]+\\.[A-Za-z]+";
+    	private static String usernameRegex = "\\w+";
     	
     	public String validate() {
     		if (!UserInfo.usernameAvailable(username)) {
@@ -85,6 +86,10 @@ public class Application extends Controller {
     		}
     		else if (!UserInfo.emailAvailable(email)) {
     			return "Account already created with that email";
+    		}
+    		else if (username == null || username.length() <=0 ||
+    				!username.matches(usernameRegex)) {
+    			return "Invalid username";
     		}
     		else if (email == null || !email.matches(emailRegex)) {
     			return "Invalid email";
