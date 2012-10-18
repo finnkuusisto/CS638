@@ -21,6 +21,8 @@
     <form action="@routes.Application.createAccount()" method="post">
         <legend>Create new account</legend>
         <label></label>
+        <input type="text" placeholder="Full Name" name="fullname" value=@form("fullname").value>
+        <label></label>
         <input type="text" placeholder="Username" name="username" value=@form("username").value>
         <label></label>
         <input type="text" placeholder="Email" name="email" value=@form("email").value>

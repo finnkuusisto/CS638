@@ -22,13 +22,14 @@ public class UserInfo extends Model {
     @Id
     public String username;
     public String email;
-    public String firstName;
-    public String lastName;
+    public String fullName;
     
     public String passHash;
     public String salt;
     
-    public UserInfo(String username, String email, String password) {
+    public UserInfo(String fullName, String username, String email,
+    		String password) {
+    	this.fullName = fullName;
     	this.username = username;
     	this.email = email;
     	this.salt = UserInfo.newSalt();
@@ -59,8 +60,9 @@ public class UserInfo extends Model {
         return find.all();
     }
     
-    public static void create(String username, String email, String password) {
-    	UserInfo user = new UserInfo(username, email, password);
+    public static void create(String fullName, String username, String email,
+    		String password) {
+    	UserInfo user = new UserInfo(fullName, username, email, password);
     	user.save();
     }
 

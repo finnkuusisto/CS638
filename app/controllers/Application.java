@@ -72,6 +72,7 @@ public class Application extends Controller {
     
     public static class Account {
     	
+    	public String fullname;
     	public String username;
     	public String email;
     	public String password;
@@ -97,6 +98,9 @@ public class Application extends Controller {
     		else if (password == null || password.length() <= 0) {
     			return "Invalid password";
     		}
+    		else if (fullname == null || fullname.length() <= 0) {
+    			return "Please enter your full name";
+    		}
     		return null;
     	}
     	
@@ -113,7 +117,8 @@ public class Application extends Controller {
     	}
     	else {
     		Account account = accountForm.get();
-    		UserInfo.create(account.username, account.email, account.password);
+    		UserInfo.create(account.fullname, account.username, account.email,
+    				account.password);
     		flash("success", "Account created");
     		return redirect(routes.Application.login());
     	}
