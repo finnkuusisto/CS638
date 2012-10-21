@@ -12,7 +12,12 @@ import views.html.*;
 public class Info extends Controller {
 	
 	public static Result viewEvent(String id) {
-		return ok(eventinfo.render(EventInfo.findByID(id)));
+		EventInfo event = EventInfo.findByID(id);
+		Boolean creator = false;
+		if(event.creatorUsername.equals(session().get("username"))){
+		creator = true;
+		}
+		return ok(eventinfo.render(EventInfo.findByID(id),creator));
 	}
 	
 	public static Result viewUser(String username) {

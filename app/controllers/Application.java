@@ -187,11 +187,36 @@ public class Application extends Controller {
     	}
     	else {
     		Event event = eventForm.get();
-    		EventInfo.create(session().get("username"), event.name,
+    		EventInfo eventinfo = EventInfo.create(session().get("username"), event.name,
     				event.description, event.distance);
     		flash("success", "Event created");
-    		return redirect(routes.Application.index());
+    		return Info.viewEvent(eventinfo.id);
     	}
     }
+    
+    public static Result editEvent(String id){
+      	Form<Event> eventForm = form(Event.class).bindFromRequest();
+    	if (eventForm.hasErrors()) {
+    		return badRequest(newevent.render(eventForm));
+    	}
+    	else {
+    		Event event = eventForm.get();	
+    		EventInfo eventInfo = EventInfo.findByID(id);
+    		if(eventInfo != null) {
+    			eventInfo.description = event.description;
+    			eventInfo.distance = event.distance;
+    			eventInfo.name = event.name;
+    			eventInfo.save();
+    			flash("success", "Event updated");
+    		}
+    		
+    		
+    		return Info.viewEvent(eventInfo.id);
+    	
+    	}
+    	
+    }
+    
+  
 
 }

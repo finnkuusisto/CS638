@@ -22,6 +22,8 @@ public class EventInfo extends Model {
 	public String name;
 	public String description;
 	public double distance;
+	public double pace;
+	public double routeDescription;
 	
 	public EventInfo(String creatorUsername, String name, String description, double distance){
 		this.id = java.util.UUID.randomUUID().toString();
@@ -46,12 +48,13 @@ public class EventInfo extends Model {
     	return find.all();
     }
 
-    public static void create(String creatorUsername, String name,
+    public static EventInfo create(String creatorUsername, String name,
     		String description, double distance) {
     	EventInfo group = new EventInfo(creatorUsername, name, description,distance);
     	group.save();
+    	return group;
     }
-
+    
     public static EventInfo findByID(String id) {
     	return find.where().eq("id", id).findUnique();
     }

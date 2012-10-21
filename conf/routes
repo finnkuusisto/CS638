@@ -30,6 +30,7 @@ GET     /lists/events               controllers.Lists.events()
 
 # Info Pages
 GET     /event/:id             controllers.Info.viewEvent(id)
+POST     /event/:id             controllers.Application.editEvent(id)
 GET     /user/:username        controllers.Info.viewUser(username)
 GET     /group/:id             controllers.Info.viewGroup(id)
 

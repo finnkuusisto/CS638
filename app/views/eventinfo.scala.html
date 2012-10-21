@@ -1,15 +1,45 @@
-@(event: EventInfo)
+@(event: EventInfo, creator: Boolean)
 
 @main("CS 638 Web Application") {
 
     <div class="container-fluid">
          <div class="well">
-            <p class="lead">@event.name</p>
-            <p><a href="@routes.Info.viewUser(event.creatorUsername)">@event.creatorUsername</a></p>
-            <p>@event.description</p>
-            <p>Distance @event.distance</p>
+            @if(creator){ 
+    	@if(flash.contains("success")) {
+        	<div class="alert alert-success">
+            	<button type="button" class="close" data-dismiss="alert">&times;</button>
+            	@flash.get("success")
+        	</div>
+    	}
             
+            <form action="@routes.Application.editEvent(event.id)" method="post">
+            	<label></label>
+     	    	<input type="text" value="@event.name" name="name">
+     	    	<label></label>
+     	    		<label></label>
+     	    	<input type="text" value="@event.distance" name="distance">
+     	    	<label></label>
+     	    	<label></label>
+     	    	<input type="text" value="@event.description" name="description">
+     	    	<label></label>
+     	    	
+     	    	<button class="btn btn-primary" type="submit">Save Changes</button>
+         		<button class="btn btn-primary" type="reset">Cancel</button>
+     		</form> 
+     	   
+     	    
+     	    } else {
+     	    	<p class="lead">@event.name</p>
+            	<p><a href="@routes.Info.viewUser(event.creatorUsername)">@event.creatorUsername</a></p>
+            	<p>@event.distance Miles</p>
+            	<p>@event.description</p>
+            
+     	    }  
+     
         </div>
+	
     </div>
+    
+    
     
 }
