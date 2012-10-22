@@ -9,6 +9,8 @@ create table event_info (
   name                      varchar(255),
   description               varchar(255),
   distance                  double,
+  pace                      double,
+  route_description         double,
   constraint pk_event_info primary key (id))
 ;
 
@@ -24,6 +26,7 @@ create table user_info (
   username                  varchar(255) not null,
   email                     varchar(255),
   full_name                 varchar(255),
+  about                     varchar(255),
   pass_hash                 varchar(255),
   salt                      varchar(255),
   constraint pk_user_info primary key (username))

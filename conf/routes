@@ -30,8 +30,10 @@ GET     /lists/events               controllers.Lists.events()
 
 # Info Pages
 GET     /event/:id             controllers.Info.viewEvent(id)
-POST     /event/:id             controllers.Application.editEvent(id)
+POST    /event/:id             controllers.Application.editEvent(id)
 GET     /user/:username        controllers.Info.viewUser(username)
+GET     /user/:username/edit   controllers.Info.editUser(username)
+POST    /user/:username        controllers.Info.submitUserEdit(username)
 GET     /group/:id             controllers.Info.viewGroup(id)
 
 # Map static resources from the /public folder to the /assets URL path

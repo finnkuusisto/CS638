@@ -1,10 +1,26 @@
-@(user: UserInfo)
+@(user: UserInfo, editable: Boolean)
 
 @main("CS 638 Web Application") {
 
     <div class="container-fluid">
-        <legend>@user.fullName</legend>
-        <a href="mailto:@user.email">@user.email</a>
+    
+        <h1>
+            @user.fullName
+            @if(editable) {
+                <a class="btn" href="@routes.Info.editUser(user.username)"><i class="icon-pencil"></i> Edit profile</a>
+            }
+        </h1>
+        
+        <legend>About</legend>
+        <p>
+            @user.about
+        </p>
+        
+        <legend>Contact</legend>
+        <address>
+            <a href="mailto:@user.email">@user.email</a>
+        </address>
+
     </div>
     
 }

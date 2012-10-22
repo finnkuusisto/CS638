@@ -14,6 +14,9 @@ import views.html.*;
 
 public class Application extends Controller {
 	
+	public static final String EMAIL_REGEX =
+			"[a-zA-Z0-9.!#$%&'*+-/=?_`{}~|^]+@[a-zA-Z0-9.-]+\\.[A-Za-z]+";
+	
 	public static Result index() {
 		return redirect(routes.Lists.index());
 	}
@@ -77,8 +80,6 @@ public class Application extends Controller {
     	public String email;
     	public String password;
     	
-    	private static String emailRegex =
-    			"[a-zA-Z0-9.!#$%&'*+-/=?_`{}~|^]+@[a-zA-Z0-9.-]+\\.[A-Za-z]+";
     	private static String usernameRegex = "\\w+";
     	
     	public String validate() {
@@ -92,7 +93,7 @@ public class Application extends Controller {
     				!username.matches(usernameRegex)) {
     			return "Invalid username";
     		}
-    		else if (email == null || !email.matches(emailRegex)) {
+    		else if (email == null || !email.matches(EMAIL_REGEX)) {
     			return "Invalid email";
     		}
     		else if (password == null || password.length() <= 0) {

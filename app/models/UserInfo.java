@@ -23,6 +23,7 @@ public class UserInfo extends Model {
     public String username;
     public String email;
     public String fullName;
+    public String about;
     
     public String passHash;
     public String salt;
