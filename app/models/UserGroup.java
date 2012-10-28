@@ -15,12 +15,14 @@ public class UserGroup extends Model {
 	
 	@Id
 	public String id;
+	
 	public String creatorUsername;
 	public String name;
 	public String description;
 	
+	public UserGroup() {}
+	
 	public UserGroup(String creatorUsername, String name, String description) {
-		this.id = java.util.UUID.randomUUID().toString();
 		this.creatorUsername = creatorUsername;
 		this.name = name;
 		this.description = description;

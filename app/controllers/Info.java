@@ -57,7 +57,10 @@ public class Info extends Controller {
 			return notFound();
 		}
 		Boolean editable = user.username.equals(session().get("username"));
-		return ok(userinfo.render(user, editable));
+		Boolean followable = !user.username.equals(session().get("username"));
+		Boolean following = Follow.alreadyFollowing(session().get("username"),
+				username);
+		return ok(userinfo.render(user, editable, followable, following));
 	}
 	
 	public static Result editUser(String username) {
@@ -101,6 +104,30 @@ public class Info extends Controller {
 		user.save();
 		flash("success", "Changes saved");
 		return ok(edituserinfo.render(user, userEditForm));
+	}
+	
+	@Security.Authenticated(Secured.class)
+	public static Result followUser(String username) {
+		UserInfo user = UserInfo.findByUsername(username);
+		if (user == null) {
+			//TODO what's the best response to this?
+			return redirect(routes.Application.index());
+		}
+		//if they try to follow themself
+		else if (username.equals(session().get("username"))) {
+			return redirect(routes.Info.viewUser(username));
+		}
+		//otherwise, we're good
+		//delete or create, depending on current situation
+		if (Follow.alreadyFollowing(session().get("username"), username)) {
+			//then unfollow
+			Follow.delete(session().get("username"), username);
+		}
+		else {
+			//otherwise follow
+			Follow.create(session().get("username"), username);
+		}
+		return redirect(routes.Info.viewUser(username));
 	}
 	
 	///////////////

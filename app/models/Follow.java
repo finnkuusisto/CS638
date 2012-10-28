@@ -5,15 +5,24 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import play.data.validation.Constraints.Required;
 import play.db.ebean.*;
 
 @Entity
 public class Follow extends Model {
 	
+	//we shouldn't need this, but I'm having Ebean issues with deletion
+	@Id
+	public String id;
+	
 	//username of user doing the following
+	@Required
 	public String follower;
 	//username of user being followed
+	@Required
 	public String followed;
+	
+	public Follow() {}
 	
 	public Follow(String follower, String followed) {
 		this.follower = follower;
@@ -69,14 +78,30 @@ public class Follow extends Model {
 		return find.where().eq("followed", username).findList();
 	}
 	
+	public static Follow findByBoth(String follower, String followed) {
+		return find.where().eq("follower", follower).eq("followed", followed).
+				findUnique();
+	}
+	
 	public static boolean alreadyFollowing(String follower, String followed) {
 		return find.where().eq("follower", follower).eq("followed", followed).
 				findList().size() > 0;
 	}
 	
 	public static void create(String follower, String followed) {
+		if (follower == null || followed == null) {
+			return;
+		}
 		Follow follow = new Follow(follower, followed);
 		follow.save();
+	}
+	
+	public static void delete(String follower, String followed) {
+		if (follower == null || followed == null) {
+			return;
+		}
+		Follow follow = Follow.findByBoth(follower, followed);
+		follow.delete();
 	}
 	
 }

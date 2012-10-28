@@ -14,6 +14,13 @@ create table event_info (
   constraint pk_event_info primary key (id))
 ;
 
+create table follow (
+  id                        varchar(255) not null,
+  follower                  varchar(255),
+  followed                  varchar(255),
+  constraint pk_follow primary key (id))
+;
+
 create table user_group (
   id                        varchar(255) not null,
   creator_username          varchar(255),
@@ -34,6 +41,8 @@ create table user_info (
 
 create sequence event_info_seq;
 
+create sequence follow_seq;
+
 create sequence user_group_seq;
 
 create sequence user_info_seq;
@@ -47,6 +56,8 @@ SET REFERENTIAL_INTEGRITY FALSE;
 
 drop table if exists event_info;
 
+drop table if exists follow;
+
 drop table if exists user_group;
 
 drop table if exists user_info;
@@ -54,6 +65,8 @@ drop table if exists user_info;
 SET REFERENTIAL_INTEGRITY TRUE;
 
 drop sequence if exists event_info_seq;
+
+drop sequence if exists follow_seq;
 
 drop sequence if exists user_group_seq;
 
