@@ -16,10 +16,8 @@ public class Follow extends Model {
 	public String id;
 	
 	//username of user doing the following
-	@Required
 	public String follower;
 	//username of user being followed
-	@Required
 	public String followed;
 	
 	public Follow() {}
