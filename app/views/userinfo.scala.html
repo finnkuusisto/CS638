@@ -1,4 +1,4 @@
-@(user: UserInfo, editable: Boolean, followable: Boolean, following: Boolean)
+@(user: UserInfo, editable: Boolean, followable: Boolean, viewerFollowing: Boolean, following: List[UserInfo], followers: List[UserInfo])
 
 @main("CS 638 Web Application") {
 
@@ -10,7 +10,7 @@
                 <a class="btn" href="@routes.Info.editUser(user.username)"><i class="icon-pencil"></i> Edit profile</a>
             }
             @if(followable) {
-                @if(following) {
+                @if(viewerFollowing) {
                     <a class="btn btn-danger" href="@routes.Info.followUser(user.username)"><i class="icon-minus icon-white"></i> Unfollow</a>
                 } else {
                     <a class="btn btn-primary" href="@routes.Info.followUser(user.username)"><i class="icon-plus icon-white"></i> Follow</a>
@@ -27,6 +27,27 @@
         <address>
             <a href="mailto:@user.email">@user.email</a>
         </address>
+        
+        <div class="row-fluid">
+            <div class="span6">
+                <legend>Following</legend>
+                @for(user <- following) {
+                    <div class="well well-small">
+                        <p class="lead"><a href="@routes.Info.viewUser(user.username)">@user.fullName</a></p>
+                        <a href="mailto:@user.email">@user.email</a>
+                    </div>
+                }
+            </div>
+            <div class="span6">
+                <legend>Followers</legend>
+                @for(user <- followers) {
+                    <div class="well well-small">
+                        <p class="lead"><a href="@routes.Info.viewUser(user.username)">@user.fullName</a></p>
+                        <a href="mailto:@user.email">@user.email</a>
+                    </div>
+                }
+            </div>
+        </div>
 
     </div>
     
