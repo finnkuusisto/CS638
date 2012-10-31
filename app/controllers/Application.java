@@ -194,7 +194,7 @@ public class Application extends Controller {
     		return Info.viewEvent(eventinfo.id);
     	}
     }
-    
+  /*  
     public static Result editEvent(String id){
       	Form<Event> eventForm = form(Event.class).bindFromRequest();
     	if (eventForm.hasErrors()) {
@@ -218,6 +218,6 @@ public class Application extends Controller {
     	
     }
     
-  
+  */
 
 }

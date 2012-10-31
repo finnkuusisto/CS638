@@ -15,9 +15,10 @@ import com.avaje.ebean.*;
 @Entity
 public class EventInfo extends Model {
 
-	@Id
-	public String id;
 	
+    @Id
+   public String id;
+
 	public String creatorUsername;
 	public String name;
 	public String description;
@@ -26,7 +27,6 @@ public class EventInfo extends Model {
 	public double routeDescription;
 	
 	public EventInfo(String creatorUsername, String name, String description, double distance){
-		this.id = java.util.UUID.randomUUID().toString();
 		this.creatorUsername = creatorUsername;
 		this.name = name;
 		this.description = description;

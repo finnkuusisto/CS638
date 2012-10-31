@@ -27,27 +27,42 @@ public class Info extends Controller {
 	}
 	
 	  public static Result editEvent(String id){
-	      	Form<Event> eventForm = form(Event.class).bindFromRequest();
-	    	if (eventForm.hasErrors()) {
-	    		return badRequest(newevent.render(eventForm));
-	    	}
-	    	else {
-	    		Event event = eventForm.get();	
-	    		EventInfo eventInfo = EventInfo.findByID(id);
-	    		if(eventInfo != null) {
-	    			eventInfo.description = event.description;
-	    			eventInfo.distance = event.distance;
-	    			eventInfo.name = event.name;
-	    			eventInfo.save();
-	    			flash("success", "Event updated");
-	    		}
-	    		
-	    		
-	    		return Info.viewEvent(eventInfo.id);
-	    	
-	    	}
+		    EventInfo event = EventInfo.findByID(id);
+	     
+	    	// fill out form
+    		EventInfoEdit editEvent =  new EventInfoEdit(event);
+    		Form<EventInfoEdit> form = form(EventInfoEdit.class).fill(editEvent);
+    		return ok(editeventinfo.render(event, form));
+    	
 	    	
 	    }
+	  
+		public static Result submitEventEdit(String id) {
+			  EventInfo event = EventInfo.findByID(id);
+			if (event == null) {
+				//TODO make our own 404 perhaps?
+				return notFound();
+			}
+		
+			//now do the edit based on the form content
+	    	Form<EventInfoEdit> eventEditForm =
+	    			form(EventInfoEdit.class).bindFromRequest();
+	    	if (eventEditForm.hasErrors()) {
+	    		return badRequest(editeventinfo.render(event, eventEditForm));
+	    	}
+	    	//otherwise we were successful
+	    	EventInfoEdit eventEdit = eventEditForm.get();
+			event.name = eventEdit.name;
+			event.description = eventEdit.description;
+			event.save();
+			flash("success", "Changes saved");
+			boolean creator = false;;
+			// should already be true if editing but checking it anyways
+			if(event.creatorUsername.equals(session().get("username"))){
+				creator = true;
+				}
+			return ok(eventinfo.render(event, creator));
+		}
 	  
 
 	  
@@ -57,20 +72,26 @@ public class Info extends Controller {
 	    	public String description;
 	    	public double distance;
 		
+	    	public EventInfoEdit() {
+	    	this.name = " ";
+	    	this.description = " ";
+	    	this.distance = 0;
+	    	
+	    	}
 			public EventInfoEdit(Event info) {
 				this.name = info.name;
 				this.description = info.description;
 				this.distance = info.distance;
 				
 			}
+			public EventInfoEdit(EventInfo info) {
+				this.name = info.name;
+				this.description = info.description;
+				this.distance = info.distance;
+				
+			}
 			public String validate() {
-				if (name == null || name.length() <= 0) {
-	    			return "Please name the event";
-	    		}
-				if (distance <= 0) {
-	    			return "Please enter a valid distance";
-	    		}
-		
+				//TODO validate
 	    		return null;
 			}
 			

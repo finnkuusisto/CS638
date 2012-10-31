@@ -30,7 +30,8 @@ GET     /lists/events               controllers.Lists.events()
 
 # Info Pages
 GET     /event/:id                  controllers.Info.viewEvent(id)
-POST    /event/:id                  controllers.Application.editEvent(id)
+GET     /event/:id/edit             controllers.Info.editEvent(id)
+POST    /event/:id/edit             controllers.Info.submitEventEdit(id)
 GET     /user/:username             controllers.Info.viewUser(username)
 GET     /user/:username/edit        controllers.Info.editUser(username)
 POST    /user/:username             controllers.Info.submitUserEdit(username)

@@ -1,4 +1,4 @@
-@(user: UserInfo, editable: Boolean)
+@(user: UserInfo, editable: Boolean, followable: Boolean, following: Boolean)
 
 @main("CS 638 Web Application") {
 
@@ -8,6 +8,13 @@
             @user.fullName
             @if(editable) {
                 <a class="btn" href="@routes.Info.editUser(user.username)"><i class="icon-pencil"></i> Edit profile</a>
+            }
+            @if(followable) {
+                @if(following) {
+                    <a class="btn btn-danger" href="@routes.Info.followUser(user.username)"><i class="icon-minus icon-white"></i> Unfollow</a>
+                } else {
+                    <a class="btn btn-primary" href="@routes.Info.followUser(user.username)"><i class="icon-plus icon-white"></i> Follow</a>
+                }
             }
         </h1>
         
