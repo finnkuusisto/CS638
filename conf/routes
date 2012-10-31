@@ -29,12 +29,15 @@ GET     /lists/groups               controllers.Lists.groups()
 GET     /lists/events               controllers.Lists.events()
 
 # Info Pages
-GET     /event/:id             controllers.Info.viewEvent(id)
-POST    /event/:id             controllers.Application.editEvent(id)
-GET     /user/:username        controllers.Info.viewUser(username)
-GET     /user/:username/edit   controllers.Info.editUser(username)
-POST    /user/:username        controllers.Info.submitUserEdit(username)
-GET     /group/:id             controllers.Info.viewGroup(id)
+GET     /event/:id                  controllers.Info.viewEvent(id)
+POST    /event/:id                  controllers.Application.editEvent(id)
+GET     /user/:username             controllers.Info.viewUser(username)
+GET     /user/:username/edit        controllers.Info.editUser(username)
+POST    /user/:username             controllers.Info.submitUserEdit(username)
+GET     /group/:id                  controllers.Info.viewGroup(id)
+
+# Follow User
+GET     /user/:username/follow      controllers.Info.followUser(username)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
