@@ -1,4 +1,4 @@
-@(form: Form[Application.Account])
+@(form: Form[Application.Group])
 
 @main("CS 638 Web Application") {
 
@@ -18,16 +18,12 @@
         </div>
     }
 
-    <form action="@routes.Application.createAccount()" method="post">
-        <legend>Create new account</legend>
+    <form action="@routes.Application.createGroup()" method="post">
+        <legend>Create new group</legend>
         <label></label>
-        <input type="text" placeholder="Full Name" name="fullname" value="@form("fullname").value">
+        <input type="text" placeholder="Name" name="name">
         <label></label>
-        <input type="text" placeholder="Username" name="username" value="@form("username").value">
-        <label></label>
-        <input type="text" placeholder="Email" name="email" value="@form("email").value">
-        <label></label>
-        <input type="password" placeholder="Password" name="password" value="@form("password").value">
+        <input type="text" placeholder="Description" name="description">
         <label></label>
         <button class="btn btn-primary" type="submit">Create</button>
         <a class="btn" href="@routes.Application.index()">Cancel</a>

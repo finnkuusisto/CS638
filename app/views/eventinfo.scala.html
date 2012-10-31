@@ -2,8 +2,9 @@
 
 @main("CS 638 Web Application") {
 
-    <div class="container-fluid">
-         <div class="well">
+    <div class="container-fluid" style = "padding:50px; border:1px solid black;">
+	
+         <div class="well" style = "margin:10px; border:1px solid red;">
             @if(creator){ 
     	@if(flash.contains("success")) {
         	<div class="alert alert-success">
@@ -11,10 +12,9 @@
             	@flash.get("success")
         	</div>
     	}
-            
+            <h1> Heading</h1>
             <form action="@routes.Application.editEvent(event.id)" method="post">
-            	<label></label>
-     	    	<input type="text" value="@event.name" name="name">
+            	<label>something</label><input type="text" value="@event.name" name="name">
      	    	<label></label>
      	    		<label></label>
      	    	<input type="text" value="@event.distance" name="distance">

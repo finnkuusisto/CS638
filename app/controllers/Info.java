@@ -1,6 +1,7 @@
 package controllers;
 
 import controllers.Application.Account;
+import controllers.Application.Event;
 import play.*;
 import play.mvc.*;
 import play.data.*;
@@ -24,6 +25,56 @@ public class Info extends Controller {
 		}
 		return ok(eventinfo.render(EventInfo.findByID(id),creator));
 	}
+	
+	  public static Result editEvent(String id){
+	      	Form<Event> eventForm = form(Event.class).bindFromRequest();
+	    	if (eventForm.hasErrors()) {
+	    		return badRequest(newevent.render(eventForm));
+	    	}
+	    	else {
+	    		Event event = eventForm.get();	
+	    		EventInfo eventInfo = EventInfo.findByID(id);
+	    		if(eventInfo != null) {
+	    			eventInfo.description = event.description;
+	    			eventInfo.distance = event.distance;
+	    			eventInfo.name = event.name;
+	    			eventInfo.save();
+	    			flash("success", "Event updated");
+	    		}
+	    		
+	    		
+	    		return Info.viewEvent(eventInfo.id);
+	    	
+	    	}
+	    	
+	    }
+	  
+
+	  
+	  public static class EventInfoEdit {
+			
+		 	public String name;
+	    	public String description;
+	    	public double distance;
+		
+			public EventInfoEdit(Event info) {
+				this.name = info.name;
+				this.description = info.description;
+				this.distance = info.distance;
+				
+			}
+			public String validate() {
+				if (name == null || name.length() <= 0) {
+	    			return "Please name the event";
+	    		}
+				if (distance <= 0) {
+	    			return "Please enter a valid distance";
+	    		}
+		
+	    		return null;
+			}
+			
+		}
 	
 	//////////////
 	// UserInfo //

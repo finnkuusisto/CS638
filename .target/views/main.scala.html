@@ -32,40 +32,57 @@
         <![endif]-->
 
         <!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
-        
-        <div class="navbar navbar-inverse navbar-fixed-top">
+
+        <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
+                    <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <!-- the actual content of the nav-bar follows -->
                     <a class="brand" href="@routes.Application.index()">CS 638 Project</a>
-                    <div class="nav-collapse collapse">
+                    <ul class="nav-collapse collapse">
                         <ul class="nav">
                             <li><a href="@routes.Application.index()">Home</a></li>
                             <li><a href="#about">About</a></li>
                             <li><a href="#contact">Contact</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li class="divider"></li>
-                                    <li class="nav-header">Nav header</li>
-                                    <li><a href="#">Separated link</a></li>
-                                    <li><a href="#">One more separated link</a></li>
-                                </ul>
-                            </li>
- 							@if(session.contains("username")){             
-                            	<li><a href="@routes.Application.logout()">logout</a></li>
+                            @if(session.contains("username")) {
+                                <li class="divider-vertical"></li>
+                                <li><a href="@routes.Info.viewUser(session.get("username"))">Profile</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="icon-cog"></i><b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Settings</a></li>
+                                        <li><a href="@routes.Application.logout()">Logout (@session.get("username"))</a></li>
+                                    </ul>
+                                </li>
                             }
                         </ul>
-                    </div><!--/.nav-collapse -->
+                    </ul>
                 </div>
             </div>
         </div>
-
         <div class="container">
 
-            @content
+            <div class="row-fluid">
+                <div class="span2">
+                    <div class="well well-small">
+                        <p>Super-duper ads go over here!</p>
+                        <p>Super-duper ads go over here!</p>
+                        <p>Super-duper ads go over here!</p>
+                        <p>Super-duper ads go over here!</p>
+                        <p>Super-duper ads go over here!</p>
+                    </div>
+                </div>
+                <div class="span10">
+                    @content
+                </div>
+            </div>
 
             <hr>
 
