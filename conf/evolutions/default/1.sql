@@ -3,6 +3,13 @@
 
 # --- !Ups
 
+create table attend (
+  id                        varchar(255) not null,
+  username                  varchar(255),
+  event_id                  varchar(255),
+  constraint pk_attend primary key (id))
+;
+
 create table event_info (
   id                        varchar(255) not null,
   creator_username          varchar(255),
@@ -39,6 +46,8 @@ create table user_info (
   constraint pk_user_info primary key (username))
 ;
 
+create sequence attend_seq;
+
 create sequence event_info_seq;
 
 create sequence follow_seq;
@@ -54,6 +63,8 @@ create sequence user_info_seq;
 
 SET REFERENTIAL_INTEGRITY FALSE;
 
+drop table if exists attend;
+
 drop table if exists event_info;
 
 drop table if exists follow;
@@ -63,6 +74,8 @@ drop table if exists user_group;
 drop table if exists user_info;
 
 SET REFERENTIAL_INTEGRITY TRUE;
+
+drop sequence if exists attend_seq;
 
 drop sequence if exists event_info_seq;
 

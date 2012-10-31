@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.List;
+
 import controllers.Application.Account;
 import controllers.Application.Event;
 import play.*;
@@ -130,9 +132,14 @@ public class Info extends Controller {
 		}
 		Boolean editable = user.username.equals(session().get("username"));
 		Boolean followable = !user.username.equals(session().get("username"));
-		Boolean following = Follow.alreadyFollowing(session().get("username"),
-				username);
-		return ok(userinfo.render(user, editable, followable, following));
+		Boolean viewerFollowing = Follow.alreadyFollowing(
+				session().get("username"), username);
+		List<UserInfo> following = UserInfo.findUsers(
+				Follow.findUsersFollowedBy(username));
+		List<UserInfo> followers = UserInfo.findUsers(
+				Follow.findFollowersOf(username));
+		return ok(userinfo.render(user, editable, followable, viewerFollowing,
+				following, followers));
 	}
 	
 	public static Result editUser(String username) {

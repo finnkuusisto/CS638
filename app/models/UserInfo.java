@@ -89,6 +89,10 @@ public class UserInfo extends Model {
         return find.where().eq("username", username).findUnique();
     }
     
+    public static List<UserInfo> findUsers(List<String> usernames) {
+    	return find.where().in("username", usernames).findList();
+    }
+    
     /**
      * Authenticate a User.
      */
