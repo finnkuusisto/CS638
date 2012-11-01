@@ -25,7 +25,14 @@ public class Info extends Controller {
 		if(event.creatorUsername.equals(session().get("username"))){
 		creator = true;
 		}
-		return ok(eventinfo.render(EventInfo.findByID(id),creator));
+		Boolean isAttending = false;
+		if(Attend.userIsAttending(session().get("username"), id)){
+			isAttending = true;
+		}
+		
+		List<UserInfo> attending = UserInfo.findUsers(Attend.findUsersAttending(id));
+		
+		return ok(eventinfo.render(event,creator, isAttending, attending));
 	}
 	
 	  public static Result editEvent(String id){
@@ -58,14 +65,29 @@ public class Info extends Controller {
 			event.description = eventEdit.description;
 			event.save();
 			flash("success", "Changes saved");
-			boolean creator = false;;
-			// should already be true if editing but checking it anyways
-			if(event.creatorUsername.equals(session().get("username"))){
-				creator = true;
-				}
-			return ok(eventinfo.render(event, creator));
+			return redirect(routes.Info.viewEvent(id));
 		}
 	  
+		@Security.Authenticated(Secured.class)
+		public static Result attendEvent(String eventID) {
+			String username = session().get("username");
+			UserInfo user = UserInfo.findByUsername(username);
+			if (user == null) {
+				//TODO what's the best response to this?
+				return redirect(routes.Application.index());
+			}
+			
+			// if already attending then unattend
+			if(Attend.userIsAttending(username, eventID))
+			{
+				Attend.delete(username, eventID);
+			}
+			else {
+				// else attend event
+				Attend.create(username, eventID);
+			}
+			return redirect(routes.Info.viewEvent(eventID));
+		}
 
 	  
 	  public static class EventInfoEdit {
@@ -98,6 +120,8 @@ public class Info extends Controller {
 			}
 			
 		}
+	  
+	  
 	
 	//////////////
 	// UserInfo //

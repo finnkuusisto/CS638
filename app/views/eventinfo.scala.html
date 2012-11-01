@@ -1,4 +1,4 @@
-@(event: EventInfo, editable: Boolean)
+@(event: EventInfo, editable: Boolean, viewerAttending: Boolean, attending: List[UserInfo])
 
 @main("CS 638 Web Application") {
 
@@ -16,13 +16,31 @@
             <h1> @event.name
             	@if(editable) {
         		    <a class="btn" href="@routes.Info.editEvent(event.id)"><i class="icon-pencil"></i> Edit event</a> 
+       			 } else {
+       			 	@if(viewerAttending) {
+            			<button class="btn btn-primary"  href="@routes.Info.attendEvent(event.id)">Attend</button>
+            		} else{
+            			<button class="btn btn-danger"  href="@routes.Info.attendEvent(event.id)">Unattend</button>    
+        			}
+       			 
        			 }
        	    </h1>
       
      	    	<p><a href="@routes.Info.viewUser(event.creatorUsername)">@event.creatorUsername</a></p>
             	<p>@event.distance Miles</p>
             	<p>@event.description</p>
-            
+            	
+              <legend>Attending</legend>
+                @for(user <- attending) {
+                    <div class="well well-small">
+                        <p class="lead"><a href="@routes.Info.viewUser(user.username)">@user.fullName</a></p>
+                        <a href="mailto:@user.email">@user.email</a>
+                    </div>
+                }
+          
+
+         	
+         
      
         </div>
 	
