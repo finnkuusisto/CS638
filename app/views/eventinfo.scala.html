@@ -18,10 +18,10 @@
         		    <a class="btn" href="@routes.Info.editEvent(event.id)"><i class="icon-pencil"></i> Edit event</a> 
        			 } else {
        			 	@if(viewerAttending) {
-            			<button class="btn btn-primary"  href="@routes.Info.attendEvent(event.id)">Attend</button>
-            		} else{
-            			<button class="btn btn-danger"  href="@routes.Info.attendEvent(event.id)">Unattend</button>    
-        			}
+            			<button class="btn btn-danger" href="@routes.Info.attendEvent(event.id)">Unattend</button>    
+        			} else{
+            			<button class="btn btn-primary" href="@routes.Info.attendEvent(event.id)">Attend</button>
+            		}
        			 
        			 }
        	    </h1>
@@ -30,11 +30,10 @@
             	<p>@event.distance Miles</p>
             	<p>@event.description</p>
             	
-              <legend>Attending</legend>
+              <legend>@attending.size() Attending</legend>
                 @for(user <- attending) {
                     <div class="well well-small">
                         <p class="lead"><a href="@routes.Info.viewUser(user.username)">@user.fullName</a></p>
-                        <a href="mailto:@user.email">@user.email</a>
                     </div>
                 }
           

@@ -41,7 +41,7 @@ GET     /group/:id                  controllers.Info.viewGroup(id)
 GET     /user/:username/follow      controllers.Info.followUser(username)
 
 # Attend Event
-POST     /event/:id/attend      controllers.Info.attendEvent(id)
+GET    /event/:id/attend     		controllers.Info.attendEvent(id)
 
 
 # Map static resources from the /public folder to the /assets URL path
