@@ -162,8 +162,10 @@ public class Info extends Controller {
 				Follow.findUsersFollowedBy(username));
 		List<UserInfo> followers = UserInfo.findUsers(
 				Follow.findFollowersOf(username));
+		List<EventInfo> attending = EventInfo.findEvents(
+				Attend.findEventsAttendedBy(username));
 		return ok(userinfo.render(user, editable, followable, viewerFollowing,
-				following, followers));
+				following, followers, attending));
 	}
 	
 	public static Result editUser(String username) {

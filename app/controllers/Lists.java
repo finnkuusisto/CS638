@@ -9,7 +9,6 @@ import play.mvc.Controller;
 
 import views.html.*;
 
-@Security.Authenticated(Secured.class)
 public class Lists extends Controller {
 	
 	public static Result index() {
