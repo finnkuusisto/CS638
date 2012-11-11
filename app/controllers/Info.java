@@ -95,6 +95,7 @@ public class Info extends Controller {
 		 	public String name;
 	    	public String description;
 	    	public double distance;
+	    	
 		
 	    	public EventInfoEdit() {
 	    	this.name = " ";

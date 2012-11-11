@@ -12,6 +12,9 @@ import play.db.ebean.Model;
 
 import com.avaje.ebean.*;
 
+import extra.Unit;
+
+
 @Entity
 public class EventInfo extends Model {
 
@@ -23,6 +26,7 @@ public class EventInfo extends Model {
 	public String name;
 	public String description;
 	public double distance;
+	public Unit unit;
 	public double pace;
 	public double routeDescription;
 	
@@ -47,6 +51,7 @@ public class EventInfo extends Model {
     public static List<EventInfo> findAll() {
     	return find.all();
     }
+    
 
     public static EventInfo create(String creatorUsername, String name,
     		String description, double distance) {
