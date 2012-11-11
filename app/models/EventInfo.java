@@ -64,6 +64,10 @@ public class EventInfo extends Model {
     	return find.where().eq("id", id).findUnique();
     }
     
+    public static List<EventInfo> findEvents(List<String> ids) {
+    	return find.where().in("id", ids).findList();
+    }
+    
     public static List<EventInfo> findByCreator(String username) {
     	return find.where().eq("creatorUsername", username).findList();
     }

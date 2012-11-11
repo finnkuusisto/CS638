@@ -49,17 +49,35 @@
                             <li><a href="@routes.Application.index()">Home</a></li>
                             <li><a href="#about">About</a></li>
                             <li><a href="#contact">Contact</a></li>
+                            <li class="divider-vertical"></li>
                             @if(session.contains("username")) {
-                                <li class="divider-vertical"></li>
                                 <li><a href="@routes.Info.viewUser(session.get("username"))">Profile</a></li>
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <i class="icon-cog"></i><b class="caret"></b>
+                                        <i class="icon-cog"></i> <b class="caret"></b>
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li><a href="#">Settings</a></li>
                                         <li><a href="@routes.Application.logout()">Logout (@session.get("username"))</a></li>
                                     </ul>
+                                </li>
+                            } else {
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        Sign in <b class="caret"></b>
+                                    </a>
+                                    <div class="dropdown-menu" style="padding-left:10px; padding-right:10px; padding-bottom:0px;">
+                                        <form action="@routes.Application.authenticate()" method="post">
+                                            <label></label>
+                                            <input type="text" placeholder="Username" name="username">
+                                            <label></label>
+                                            <input type="password" placeholder="Password" name="password">
+                                            <label></label>
+                                            <button class="btn btn-primary" type="submit">Sign in</button>
+                                            <hr>
+                                            <a class="btn btn-warning" href="@routes.Application.newAccount()">New user?  Sign up for free.</a>
+                                        </form>
+                                    </div>
                                 </li>
                             }
                         </ul>
