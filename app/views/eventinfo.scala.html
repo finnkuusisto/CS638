@@ -27,8 +27,10 @@
        	    </h1>
       
      	    	<p><a href="@routes.Info.viewUser(event.creatorUsername)">@event.creatorUsername</a></p>
-            	<p>@event.distance Miles</p>
+            	<p>@event.distance @event.unit</p>
+            	<p>@event.pace</p>
             	<p>@event.description</p>
+            	<p>@event.routeDescription</p>
             	     
               	<legend>@attending.size() Attending</legend>
                 <div class="well well-small">

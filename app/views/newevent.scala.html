@@ -18,15 +18,50 @@
         </div>
     }
 
-    <form action="@routes.Application.createEvent()" method="post">
-        <legend>Create new event</legend>
-        <label></label>
-        <input type="text" placeholder="Name" name="name">
-        <label></label>
-        <input type="text" placeholder="Description" name="description">
-        <label></label>
-        <input type="text" placeholder="Distance" name="distance">
-        <label></label>
+    <form class="form-horizontal" action="@routes.Application.createEvent()" method="post">
+        <legend>Create new event</legend> 
+        <div class="control-group">
+                <label class="control-label" for="name">Name</label>
+                <div class="controls">
+                    <input id="name" type="text" placeholder="Name" name="name">
+                </div>
+        </div>
+        
+        <div class="control-group">
+                <label class="control-label" for="description">Description</label>
+                <div class="controls">
+                  <input id="description" type="text" placeholder="Description" name="description">
+                </div>
+        </div>
+        
+        <div class="control-group">
+                <label class="control-label" for="routeDes">Route Description</label>
+                <div class="controls">
+                     <input type="text" id="routeDes" placeholder="Describe the Route" name="routeDescription">
+                </div>
+        </div>
+        
+        <div class="control-group">
+                <label class="control-label" for="pace">Pace</label>
+                <div class="controls">
+                  <input id="pace" type="text" placeholder="Pace" name="pace">
+                </div>
+        </div>
+        
+        <div class="control-group">
+                <label class="control-label" for="distance">Distance</label>
+                <div class="controls">
+                      <input type="text" id="distance" placeholder="Distance" name="distance">
+                </div>
+        </div>
+        
+      <label></label>
+		<select name="unit">
+  			<option value="Miles">Miles</option>
+  			<option value="Kilometers">Kilometers</option>
+  			<option value="Meters">Meters</option>  			
+		</select>
+		
         <button class="btn btn-primary" type="submit">Create</button>
         <a class="btn" href="@routes.Application.index()">Cancel</a>
     </form>

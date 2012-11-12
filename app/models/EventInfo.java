@@ -27,15 +27,23 @@ public class EventInfo extends Model {
 	public String description;
 	public double distance;
 	public Unit unit;
-	public double pace;
-	public double routeDescription;
+	public String pace;
+	public String routeDescription;
 	
-	public EventInfo(String creatorUsername, String name, String description, double distance){
+	public EventInfo(String creatorUsername, String name, String description, double distance, String unit, String routeDescription, String pace){
 		this.creatorUsername = creatorUsername;
 		this.name = name;
 		this.description = description;
 		this.distance = distance;
-		
+		this.routeDescription = routeDescription;
+		this.pace = pace;
+		if(unit.equals("Miles")){
+			this.unit = Unit.miles;
+		} else if(unit.equals("Meters")){
+			this.unit = Unit.meters;
+		} else if(unit.equals("Kilometers")) {
+			this.unit = Unit.kilometers;		
+		}	
 	}
 	
 	///////////
@@ -54,8 +62,8 @@ public class EventInfo extends Model {
     
 
     public static EventInfo create(String creatorUsername, String name,
-    		String description, double distance) {
-    	EventInfo group = new EventInfo(creatorUsername, name, description,distance);
+    		String description, double distance, String unit, String routeDescription, String pace) {
+    	EventInfo group = new EventInfo(creatorUsername, name, description,distance,unit, routeDescription, pace);
     	group.save();
     	return group;
     }

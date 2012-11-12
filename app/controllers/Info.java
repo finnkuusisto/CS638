@@ -4,6 +4,7 @@ import java.util.List;
 
 import controllers.Application.Account;
 import controllers.Application.Event;
+import extra.Unit;
 import play.*;
 import play.mvc.*;
 import play.data.*;
@@ -63,6 +64,13 @@ public class Info extends Controller {
 	    	EventInfoEdit eventEdit = eventEditForm.get();
 			event.name = eventEdit.name;
 			event.description = eventEdit.description;
+			if(eventEdit.unit.equals("Miles")){
+				event.unit = Unit.miles;
+			} else if(eventEdit.unit.equals("Meters")){
+				event.unit = Unit.meters;
+			} else if(eventEdit.unit.equals("Kilometers")) {
+				event.unit = Unit.kilometers;		
+			}	
 			event.save();
 			flash("success", "Changes saved");
 			return redirect(routes.Info.viewEvent(id));
@@ -95,7 +103,12 @@ public class Info extends Controller {
 		 	public String name;
 	    	public String description;
 	    	public double distance;
-	    	
+	    	public String unit;
+	    	public String pace;
+	    	public String routeDescription;
+	    	public String miles = "unchecked";
+	    	public String kilometers = "unchecked";
+	    	public String meters = "unchecked";
 		
 	    	public EventInfoEdit() {
 	    	this.name = " ";
@@ -107,12 +120,31 @@ public class Info extends Controller {
 				this.name = info.name;
 				this.description = info.description;
 				this.distance = info.distance;
+				this.unit = info.unit;
+				this.pace = info.pace;
+				this.routeDescription = info.routeDescription;
 				
 			}
 			public EventInfoEdit(EventInfo info) {
 				this.name = info.name;
 				this.description = info.description;
 				this.distance = info.distance;
+				this.unit = info.unit.toString();
+				this.routeDescription = info.routeDescription;
+				this.pace = info.pace;
+						
+				if(this.unit.equals("miles")){
+					miles = "checked";
+				}
+				else if(this.unit.equals("kilometers")){
+					kilometers = "checked";
+					
+				} else if(this.unit.equals("meters")){
+					meters = "checked";
+				}
+				
+				
+				
 				
 			}
 			public String validate() {
@@ -166,7 +198,7 @@ public class Info extends Controller {
 		List<EventInfo> attending = EventInfo.findEvents(
 				Attend.findEventsAttendedBy(username));
 		return ok(userinfo.render(user, editable, followable, viewerFollowing,
-				following, followers, attending));
+				following,followers, attending));
 	}
 	
 	public static Result editUser(String username) {

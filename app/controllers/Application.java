@@ -2,6 +2,9 @@ package controllers;
 
 import java.util.regex.Pattern;
 
+import extra.Unit;
+
+import models.Attend;
 import models.EventInfo;
 import models.UserGroup;
 import models.UserInfo;
@@ -169,6 +172,9 @@ public class Application extends Controller {
     	public String name;
     	public String description;
     	public double distance;
+    	public String unit;
+    	public String pace;
+    	public String routeDescription;
     	
     	public String validate() {
     		//TODO validate this shiz
@@ -188,10 +194,14 @@ public class Application extends Controller {
     	}
     	else {
     		Event event = eventForm.get();
+    		
+    		
+    		
     		EventInfo eventinfo = EventInfo.create(session().get("username"), event.name,
-    				event.description, event.distance);
+    				event.description, event.distance, event.unit,event.routeDescription, event.pace);
     		flash("success", "Event created");
-    		return Info.viewEvent(eventinfo.id);
+    		
+    		return  Info.attendEvent(eventinfo.id);
     	}
     }
   /*  
