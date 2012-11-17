@@ -16,8 +16,10 @@ create table event_info (
   name                      varchar(255),
   description               varchar(255),
   distance                  double,
-  pace                      double,
-  route_description         double,
+  unit                      integer,
+  pace                      varchar(255),
+  route_description         varchar(255),
+  constraint ck_event_info_unit check (unit in (0,1,2)),
   constraint pk_event_info primary key (id))
 ;
 
@@ -26,6 +28,16 @@ create table follow (
   follower                  varchar(255),
   followed                  varchar(255),
   constraint pk_follow primary key (id))
+;
+
+create table run_time (
+  id                        varchar(255) not null,
+  title                     varchar(255),
+  time                      integer,
+  distance                  double,
+  unit                      integer,
+  constraint ck_run_time_unit check (unit in (0,1,2)),
+  constraint pk_run_time primary key (id))
 ;
 
 create table user_group (
@@ -52,6 +64,8 @@ create sequence event_info_seq;
 
 create sequence follow_seq;
 
+create sequence run_time_seq;
+
 create sequence user_group_seq;
 
 create sequence user_info_seq;
@@ -69,6 +83,8 @@ drop table if exists event_info;
 
 drop table if exists follow;
 
+drop table if exists run_time;
+
 drop table if exists user_group;
 
 drop table if exists user_info;
@@ -80,6 +96,8 @@ drop sequence if exists attend_seq;
 drop sequence if exists event_info_seq;
 
 drop sequence if exists follow_seq;
+
+drop sequence if exists run_time_seq;
 
 drop sequence if exists user_group_seq;
 

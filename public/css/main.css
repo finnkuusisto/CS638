@@ -4,7 +4,17 @@
    Author's custom styles
    ========================================================================== */
 
-
+.my-box {
+    padding: 10px;
+    background : -webkit-linear-gradient(left top, #C9E1F0, #FFFFFF);
+    background : -moz-linear-gradient(left top, #C9E1F0, #FFFFFF);
+    background : -o-linear-gradient(left top, #C9E1F0, #FFFFFF);
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 1px 1px 5px 0px #7D7D7D;
+    -webkit-box-shadow: 1px 1px 5px 0px #7D7D7D;
+    -moz-box-shadow: 1px 1px 5px 0px #7D7D7D;
+    overflow: auto;
+}
 
 
 
