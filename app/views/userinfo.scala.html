@@ -6,14 +6,10 @@ following: List[UserInfo], followers: List[UserInfo], attending: List[EventInfo]
     <div class="container-fluid">
     
         <div class="row-fluid">
-            <div class="span8">
+            <div class="span12">
                 <h1>
                     @user.fullName
-                </h1>
-            </div>
-            <div class="span4">
-                <h1> <!-- this is stupid, but it produces the right padding -->
-                @if(editable) {
+                                    @if(editable) {
                     <a class="btn" href="@routes.Info.editUser(user.username)"><i class="icon-pencil"></i> Edit profile</a>
                 }
                 @if(followable) {
@@ -27,52 +23,75 @@ following: List[UserInfo], followers: List[UserInfo], attending: List[EventInfo]
             </div>
         </div>
         
+        <hr>
+        
         <div class="row-fluid">
-            <div class="span2">
-                <legend>Picture</legend>
-                <img src="@Gravatar.getURL(user.email,140,true)" class="img-rounded">
-            </div>
-            <div class="span6">
-                <legend>About</legend>
-                <p>
-                    @user.about
-                </p>
-            </div>
             <div class="span4">
+                
+                <img src="@Gravatar.getURL(user.email,280,true)" class="img-rounded">
+                
                 <legend>Contact</legend>
                 <address>
                     <a href="mailto:@user.email">@user.email</a>
                 </address>
+                
+            </div>
+            <div class="span8">
+                <legend>About</legend>
+                @if(user.about!=null) {
+                    @for(para <- user.about.trim().split("\n+")) {
+                        <p>
+                            @para.trim()
+                        </p>
+                    }
+                }
             </div>
         </div>
 
         <div class="row-fluid">
             <div class="span4">
-                <legend>Following</legend>
-                @for(user <- following) {
-                    <div class="well well-small">
-                        <p class="lead"><a href="@routes.Info.viewUser(user.username)">@user.fullName</a></p>
-                        <a href="mailto:@user.email">@user.email</a>
-                    </div>
-                }
+                <table class="table table-condensed table-hover">
+                <thead><tr><th>Following</th></tr></thead>
+                    <tbody>
+                    @for(user <- following) {
+                        <tr>
+                        <td>
+                            <a href="@routes.Info.viewUser(user.username)">@user.fullName</a>
+                        </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
             </div>
             <div class="span4">
-                <legend>Followers</legend>
-                @for(user <- followers) {
-                    <div class="well well-small">
-                        <p class="lead"><a href="@routes.Info.viewUser(user.username)">@user.fullName</a></p>
-                        <a href="mailto:@user.email">@user.email</a>
-                    </div>
-                }
+
+                <table class="table table-condensed table-hover">
+                <thead><tr><th>Followers</th></tr></thead>
+                    <tbody>
+                    @for(user <- followers) {
+                        <tr>
+                        <td>
+                            <a href="@routes.Info.viewUser(user.username)">@user.fullName</a>
+                        </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+                
             </div>
             <div class="span4">
-                <legend>Attending</legend>
-                @for(event <- attending) {
-                    <div class="well well-small">
-                        <p class="lead"><a href="@routes.Info.viewEvent(event.id)">@event.name</a></p>
-                        <p>@event.description</p>
-                    </div>
-                }
+                <table class="table table-condensed table-hover">
+                <thead><tr><th>Attending</th></tr></thead>
+                    <tbody>
+                        @for(event <- attending) {
+                            <tr>
+                            <td>
+                                <a href="@routes.Info.viewEvent(event.id)">@event.name</a>
+                            </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
 

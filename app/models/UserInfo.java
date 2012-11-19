@@ -23,6 +23,7 @@ public class UserInfo extends Model {
     public String username;
     public String email;
     public String fullName;
+    @Column(columnDefinition="TEXT") //yeah, this assumes such a type exists
     public String about;
     
     public String passHash;

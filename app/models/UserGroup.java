@@ -42,7 +42,6 @@ public class UserGroup extends Model {
         return find.all();
     }
     
-    
     public static List<UserGroup> findByCreator(String username) {
     	return find.where().eq("creatorUsername", username).findList();
     }

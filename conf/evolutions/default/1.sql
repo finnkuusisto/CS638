@@ -52,10 +52,20 @@ create table user_info (
   username                  varchar(255) not null,
   email                     varchar(255),
   full_name                 varchar(255),
-  about                     varchar(255),
+  about                     TEXT,
   pass_hash                 varchar(255),
   salt                      varchar(255),
   constraint pk_user_info primary key (username))
+;
+
+create table zip_code_info (
+  zipcode                   varchar(255) not null,
+  state                     varchar(255),
+  fips_region               varchar(255),
+  city                      varchar(255),
+  latitude                  double,
+  longitude                 double,
+  constraint pk_zip_code_info primary key (zipcode))
 ;
 
 create sequence attend_seq;
@@ -69,6 +79,8 @@ create sequence run_time_seq;
 create sequence user_group_seq;
 
 create sequence user_info_seq;
+
+create sequence zip_code_info_seq;
 
 
 
@@ -89,6 +101,8 @@ drop table if exists user_group;
 
 drop table if exists user_info;
 
+drop table if exists zip_code_info;
+
 SET REFERENTIAL_INTEGRITY TRUE;
 
 drop sequence if exists attend_seq;
@@ -102,4 +116,6 @@ drop sequence if exists run_time_seq;
 drop sequence if exists user_group_seq;
 
 drop sequence if exists user_info_seq;
+
+drop sequence if exists zip_code_info_seq;
 
