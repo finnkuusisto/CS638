@@ -1,5 +1,6 @@
 package models;
 
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -114,7 +115,6 @@ public class UserInfo extends Model {
     public static final String HASH_ALGORITHM = "SHA-256"; //guaranteed
     public static final int SALT_SIZE = 32;
     
-    private static final MessageDigest MD = UserInfo.getMD();
     private static MessageDigest getMD() {
     	MessageDigest md = null;
     	try {
@@ -131,13 +131,18 @@ public class UserInfo extends Model {
     private static String newSalt() {
     	byte[] salt = new byte[UserInfo.SALT_SIZE];
     	UserInfo.SECURE_RAND.nextBytes(salt);
-    	return new String(salt);
+    	return UserInfo.toHexString(salt);
     }
     
     private static String hashPassword(String password, String salt) {
     	String salted = salt + password;
-    	return new String(UserInfo.MD.digest(salted.getBytes()));
+    	return UserInfo.toHexString(UserInfo.getMD().digest(salted.getBytes()));
     }
+    
+	private static String toHexString(byte[] buf) {
+		BigInteger bi = new BigInteger(1, buf);
+		return String.format("%0" + (buf.length << 1) + "X", bi);
+	}
     
 }
 

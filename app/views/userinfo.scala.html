@@ -28,7 +28,7 @@ following: List[UserInfo], followers: List[UserInfo], attending: List[EventInfo]
         <div class="row-fluid">
             <div class="span4">
                 
-                <img src="@Gravatar.getURL(user.email,280,true)" class="img-rounded">
+                <img src="@Gravatar.getURL(user.email,280,Gravatar.DFLT_MYSTERY_MAN)" class="img-rounded">
                 
                 <legend>Contact</legend>
                 <address>
@@ -55,9 +55,12 @@ following: List[UserInfo], followers: List[UserInfo], attending: List[EventInfo]
                     <tbody>
                     @for(user <- following) {
                         <tr>
-                        <td>
-                            <a href="@routes.Info.viewUser(user.username)">@user.fullName</a>
-                        </td>
+                            <td>
+                                <img src="@Gravatar.getURL(user.email,24,Gravatar.DFLT_MYSTERY_MAN)">
+                            </td>
+                            <td>
+                                <a href="@routes.Info.viewUser(user.username)">@user.fullName</a>
+                            </td>
                         </tr>
                     }
                     </tbody>
@@ -70,9 +73,12 @@ following: List[UserInfo], followers: List[UserInfo], attending: List[EventInfo]
                     <tbody>
                     @for(user <- followers) {
                         <tr>
-                        <td>
-                            <a href="@routes.Info.viewUser(user.username)">@user.fullName</a>
-                        </td>
+                            <td>
+                                <img src="@Gravatar.getURL(user.email,24,Gravatar.DFLT_MYSTERY_MAN)">
+                            </td>
+                            <td>
+                                <a href="@routes.Info.viewUser(user.username)">@user.fullName</a>
+                            </td>
                         </tr>
                     }
                     </tbody>
