@@ -62,6 +62,10 @@ public class Attend extends Model {
 		return ret;
 	}
 	
+	public static int numEventsAttendedBy(String username) {
+		return find.where().eq("username", username).findRowCount();
+	}
+	
 	/**
 	 * Get all of the Attend relations for a given user.
 	 * @param username

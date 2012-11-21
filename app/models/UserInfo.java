@@ -23,18 +23,25 @@ public class UserInfo extends Model {
     @Id
     public String username;
     public String email;
+    public String zipCode;
+    public boolean publicEmail;
     public String fullName;
     @Column(columnDefinition="TEXT") //yeah, this assumes such a type exists
     public String about;
+    public long joinDate;
+    public String url;
     
     public String passHash;
     public String salt;
     
     public UserInfo(String fullName, String username, String email,
-    		String password) {
+    		String zipCode, long joinDate, String password) {
     	this.fullName = fullName;
     	this.username = username;
     	this.email = email;
+    	this.zipCode = ZipCodeInfo.getValidatedZipCode(zipCode);
+    	this.joinDate = joinDate;
+    	this.url = "";
     	this.salt = UserInfo.newSalt();
     	this.passHash = UserInfo.hashPassword(password, this.salt);
     }
@@ -64,8 +71,11 @@ public class UserInfo extends Model {
     }
     
     public static void create(String fullName, String username, String email,
-    		String password) {
-    	UserInfo user = new UserInfo(fullName, username, email, password);
+    		String zipCode, String password) {
+    	//Date objects are always UTC/GMT
+    	Date now = new Date();
+    	UserInfo user = new UserInfo(fullName, username, email, zipCode,
+    			now.getTime(), password);
     	user.save();
     }
 

@@ -35,6 +35,8 @@ POST    /event/:id/edit             controllers.Info.submitEventEdit(id)
 GET     /user/:username             controllers.Info.viewUser(username)
 GET     /user/:username/edit        controllers.Info.editUser(username)
 POST    /user/:username             controllers.Info.submitUserEdit(username)
+GET     /user/:username/followers   controllers.Info.viewUserFollowInfo(username)
+GET     /user/:username/attending   controllers.Info.viewUserAttendInfo(username)
 GET     /group/:id                  controllers.Info.viewGroup(id)
 
 # Follow User

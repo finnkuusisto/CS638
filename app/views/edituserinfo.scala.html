@@ -30,6 +30,20 @@
             </div>
             
             <div class="control-group">
+                <label class="control-label" for="inputZipcode">URL</label>
+                <div class="controls">
+                    <input type="text" id="inputZipcodee" placeholder="Zip code" name="zipCode" value="@form("zipCode").value">
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label class="control-label" for="inputURL">URL</label>
+                <div class="controls">
+                    <input type="text" id="inputURL" placeholder="http://" name="url" value="@form("url").value">
+                </div>
+            </div>
+            
+            <div class="control-group">
                 <label class="control-label" for="inputAbout">About</label>
                 <div class="controls">
                     <textarea class="input-xlarge" rows="3" id="inputAbout" placeholder="About" name="about">@form("about").value</textarea>

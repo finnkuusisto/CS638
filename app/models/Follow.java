@@ -45,6 +45,10 @@ public class Follow extends Model {
 		return ret;
 	}
 	
+	public static int numFollowersOf(String username) {
+		return find.where().eq("followed", username).findRowCount();
+	}
+	
 	public static List<String> findUsersFollowedBy(String username) {
 		//first get all the relations where username is the following user
 		List<Follow> followed = Follow.findByFollower(username);
@@ -54,6 +58,10 @@ public class Follow extends Model {
 			ret.add(f.followed);
 		}
 		return ret;
+	}
+	
+	public static int numUsersFollowedBy(String username) {
+		return find.where().eq("follower", username).findRowCount();
 	}
 	
 	/**

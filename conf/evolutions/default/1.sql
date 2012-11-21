@@ -51,8 +51,12 @@ create table user_group (
 create table user_info (
   username                  varchar(255) not null,
   email                     varchar(255),
+  zip_code                  varchar(255),
+  public_email              boolean,
   full_name                 varchar(255),
   about                     TEXT,
+  join_date                 bigint,
+  url                       varchar(255),
   pass_hash                 varchar(255),
   salt                      varchar(255),
   constraint pk_user_info primary key (username))

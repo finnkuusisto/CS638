@@ -8,6 +8,7 @@ import models.Attend;
 import models.EventInfo;
 import models.UserGroup;
 import models.UserInfo;
+import models.ZipCodeInfo;
 import play.*;
 import play.data.*;
 import play.data.validation.*;
@@ -81,6 +82,7 @@ public class Application extends Controller {
     	public String fullname;
     	public String username;
     	public String email;
+    	public String zipCode;
     	public String password;
     	
     	private static String usernameRegex = "\\w+";
@@ -99,11 +101,14 @@ public class Application extends Controller {
     		else if (email == null || !email.matches(EMAIL_REGEX)) {
     			return "Invalid email";
     		}
+    		else if (ZipCodeInfo.getValidatedZipCode(zipCode) == null) {
+    			return "Invalid zip code";
+    		}
     		else if (password == null || password.length() <= 0) {
     			return "Invalid password";
     		}
     		else if (fullname == null || fullname.length() <= 0) {
-    			return "Please enter your full name";
+    			return "Please enter your name";
     		}
     		return null;
     	}
@@ -122,7 +127,7 @@ public class Application extends Controller {
     	else {
     		Account account = accountForm.get();
     		UserInfo.create(account.fullname, account.username, account.email,
-    				account.password);
+    				account.zipCode, account.password);
     		flash("success", "Account created");
     		return redirect(routes.Application.login());
     	}

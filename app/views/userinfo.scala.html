@@ -1,5 +1,5 @@
 @(user: UserInfo, editable: Boolean, followable: Boolean, viewerFollowing: Boolean,
-following: List[UserInfo], followers: List[UserInfo], attending: List[EventInfo])
+following: Integer, followers: Integer, attending: Integer)
 
 @main("CS 638 Web Application") {
 
@@ -9,16 +9,16 @@ following: List[UserInfo], followers: List[UserInfo], attending: List[EventInfo]
             <div class="span12">
                 <h1>
                     @user.fullName
-                                    @if(editable) {
-                    <a class="btn" href="@routes.Info.editUser(user.username)"><i class="icon-pencil"></i> Edit profile</a>
-                }
-                @if(followable) {
-                    @if(viewerFollowing) {
-                        <a class="btn btn-danger" href="@routes.Info.followUser(user.username)"><i class="icon-minus icon-white"></i> Unfollow</a>
-                    } else {
-                        <a class="btn btn-primary" href="@routes.Info.followUser(user.username)"><i class="icon-plus icon-white"></i> Follow</a>
+                    @if(editable) {
+                        <a class="btn pull-right" href="@routes.Info.editUser(user.username)"><i class="icon-pencil"></i> Edit profile</a>
                     }
-                }
+                    @if(followable) {
+                        @if(viewerFollowing) {
+                            <a class="btn btn-danger pull-right" href="@routes.Info.followUser(user.username)"><i class="icon-minus icon-white"></i> Unfollow</a>
+                        } else {
+                            <a class="btn btn-primary pull-right" href="@routes.Info.followUser(user.username)"><i class="icon-plus icon-white"></i> Follow</a>
+                        }
+                    }
                 </h1>
             </div>
         </div>
@@ -28,12 +28,41 @@ following: List[UserInfo], followers: List[UserInfo], attending: List[EventInfo]
         <div class="row-fluid">
             <div class="span4">
                 
-                <img src="@Gravatar.getURL(user.email,280,Gravatar.DFLT_MYSTERY_MAN)" class="img-rounded">
+                <img src="@Gravatar.getURL(user.email,280,Gravatar.DFLT_MYSTERY_MAN)" class="img-polaroid">
                 
-                <legend>Contact</legend>
-                <address>
-                    <a href="mailto:@user.email">@user.email</a>
-                </address>
+                <hr>
+                
+                <p><i class="icon-map-marker muted"></i> @ZipCodeInfo.getLocationString(user.zipCode)</p>
+                @if(user.publicEmail) {
+                    <p><i class="icon-envelope muted"></i> <a href="mailto:@user.email">@user.email</a></p>
+                }
+                @if(user.url!=null&&user.url.length()>0) {
+                    <p><i class="icon-link muted"></i> <a href="@user.url">@user.url</a></p>
+                }
+                <p><i class="icon-time muted"></i> <span class="muted">Joined</span> <span id="join-date">Sometime<span></p>
+                <!-- Script for local time zone join date -->
+                <script>
+                    document.getElementById("join-date").innerHTML=shortDateString(@user.joinDate);
+                </script>
+                
+                <hr>
+                
+                <div class="row-fluid">
+                    <div class="span4">
+                        <strong>@following</strong>
+                        <p><a href="@routes.Info.viewUserFollowInfo(user.username)">Following</a></p>
+                    </div>
+                    <div class="span4">
+                        <strong>@followers</strong>
+                        <p><a href="@routes.Info.viewUserFollowInfo(user.username)">Followers</a></p>
+                    </div>
+                    <div class="span4">
+                        <strong>@attending</strong>
+                        <p><a href="@routes.Info.viewUserAttendInfo(user.username)">Attending</a></p>
+                    </div>
+                </div>
+                
+                <hr>
                 
             </div>
             <div class="span8">
@@ -45,59 +74,6 @@ following: List[UserInfo], followers: List[UserInfo], attending: List[EventInfo]
                         </p>
                     }
                 }
-            </div>
-        </div>
-
-        <div class="row-fluid">
-            <div class="span4">
-                <table class="table table-condensed table-hover">
-                <thead><tr><th>Following</th></tr></thead>
-                    <tbody>
-                    @for(user <- following) {
-                        <tr>
-                            <td>
-                                <img src="@Gravatar.getURL(user.email,24,Gravatar.DFLT_MYSTERY_MAN)">
-                            </td>
-                            <td>
-                                <a href="@routes.Info.viewUser(user.username)">@user.fullName</a>
-                            </td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
-            </div>
-            <div class="span4">
-
-                <table class="table table-condensed table-hover">
-                <thead><tr><th>Followers</th></tr></thead>
-                    <tbody>
-                    @for(user <- followers) {
-                        <tr>
-                            <td>
-                                <img src="@Gravatar.getURL(user.email,24,Gravatar.DFLT_MYSTERY_MAN)">
-                            </td>
-                            <td>
-                                <a href="@routes.Info.viewUser(user.username)">@user.fullName</a>
-                            </td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
-                
-            </div>
-            <div class="span4">
-                <table class="table table-condensed table-hover">
-                <thead><tr><th>Attending</th></tr></thead>
-                    <tbody>
-                        @for(event <- attending) {
-                            <tr>
-                            <td>
-                                <a href="@routes.Info.viewEvent(event.id)">@event.name</a>
-                            </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
             </div>
         </div>
 

@@ -42,6 +42,10 @@ public class ZipCodeInfo extends Model {
     	return find.all();
     }
     
+    public static boolean  zipCodeExists(String zipcode) {
+    	return ZipCodeInfo.findByZipCode(zipcode) != null;
+    }
+    
     public static ZipCodeInfo findByZipCode(String zipcode) {
     	return find.where().eq("zipcode", zipcode).findUnique();
     }
@@ -60,6 +64,27 @@ public class ZipCodeInfo extends Model {
     ///////////
     //Helpers//
     ///////////
+    
+    public static String getLocationString(String zip) {
+    	ZipCodeInfo info = ZipCodeInfo.findByZipCode(zip);
+    	if (info != null) {
+    		return info.city + ", " + info.state;
+    	}
+    	return "Somewhere, USA";
+    }
+    
+    public static String getValidatedZipCode(String zip) {
+    	if (zip != null) {
+    		zip = zip.trim();
+    		if (zip.length() > 5) {
+    			zip = zip.substring(0, 5);
+    		}
+    		if (!ZipCodeInfo.zipCodeExists(zip)) {
+    			zip = null;
+    		}
+    	}
+    	return zip;
+    }
     
     public static double distanceBetweenZips(String zip1, String zip2) {
     	//first get both locations

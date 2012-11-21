@@ -163,19 +163,27 @@ public class Info extends Controller {
 	public static class UserInfoEdit {
 		
 		public String fullName;
+		public String zipCode;
+		public String url;
 		public String about;
 		
 		public UserInfoEdit() {}
 		
 		public UserInfoEdit(UserInfo info) {
 			this.fullName = info.fullName;
+			this.zipCode = info.zipCode;
+			this.url = info.url;
 			this.about = info.about;
 		}
 		
 		public String validate() {
+			zipCode = ZipCodeInfo.getValidatedZipCode(zipCode);
 			if (fullName == null || fullName.length() <= 0) {
     			return "Please enter your full name";
     		}
+			else if (zipCode == null) {
+				return "Invalid zip code";
+			}
     		return null;
 		}
 		
@@ -187,18 +195,16 @@ public class Info extends Controller {
 			//TODO make our own 404 perhaps?
 			return notFound();
 		}
+		//TODO better security
 		Boolean editable = user.username.equals(session().get("username"));
 		Boolean followable = !user.username.equals(session().get("username"));
 		Boolean viewerFollowing = Follow.alreadyFollowing(
 				session().get("username"), username);
-		List<UserInfo> following = UserInfo.findUsers(
-				Follow.findUsersFollowedBy(username));
-		List<UserInfo> followers = UserInfo.findUsers(
-				Follow.findFollowersOf(username));
-		List<EventInfo> attending = EventInfo.findEvents(
-				Attend.findEventsAttendedBy(username));
+		int numFollowing = Follow.numUsersFollowedBy(username);
+		int numFollowers = Follow.numFollowersOf(username);
+		int numAttending = Attend.numEventsAttendedBy(username);
 		return ok(userinfo.render(user, editable, followable, viewerFollowing,
-				following,followers, attending));
+				numFollowing, numFollowers, numAttending));
 	}
 	
 	public static Result editUser(String username) {
@@ -238,10 +244,48 @@ public class Info extends Controller {
     	//otherwise we were successful
 		UserInfoEdit userEdit = userEditForm.get();
 		user.fullName = userEdit.fullName;
+		//check the url
+		if (userEdit.url != null) {
+			user.url = userEdit.url;
+			//tack http:// on it if needed, and if it wasn't just cleared
+			if (user.url.length() > 0 && !user.url.startsWith("http://") &&
+					!user.url.startsWith("https://")) {
+				user.url = "http://" + user.url;
+			}
+		}
+		user.zipCode = ZipCodeInfo.getValidatedZipCode(userEdit.zipCode);
 		user.about = userEdit.about;
 		user.save();
 		flash("success", "Changes saved");
-		return ok(edituserinfo.render(user, userEditForm));
+		return Info.editUser(username);
+	}
+	
+	public static Result viewUserFollowInfo(String username) {
+		UserInfo user = UserInfo.findByUsername(username);
+		if (user == null) {
+			//TODO make our own 404 perhaps?
+			return notFound();
+		}
+		//TODO better security
+		Boolean editable = user.username.equals(session().get("username"));
+		List<UserInfo> following = UserInfo.findUsers(
+				Follow.findUsersFollowedBy(username));
+		List<UserInfo> followers = UserInfo.findUsers(
+				Follow.findFollowersOf(username));
+		return ok(userfollowinfo.render(user, editable, following, followers));
+	}
+	
+	public static Result viewUserAttendInfo(String username) {
+		UserInfo user = UserInfo.findByUsername(username);
+		if (user == null) {
+			//TODO make our own 404 perhaps?
+			return notFound();
+		}
+		//TODO better security
+		Boolean editable = user.username.equals(session().get("username"));
+		List<EventInfo> attending = EventInfo.findEvents(
+				Attend.findEventsAttendedBy(username));
+		return ok(userattendinfo.render(user, editable, attending));
 	}
 	
 	@Security.Authenticated(Secured.class)
