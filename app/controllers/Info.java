@@ -166,6 +166,7 @@ public class Info extends Controller {
 		public String zipCode;
 		public String url;
 		public String about;
+		public boolean publicEmail;
 		
 		public UserInfoEdit() {}
 		
@@ -174,6 +175,7 @@ public class Info extends Controller {
 			this.zipCode = info.zipCode;
 			this.url = info.url;
 			this.about = info.about;
+			this.publicEmail = info.publicEmail;
 		}
 		
 		public String validate() {
@@ -255,6 +257,7 @@ public class Info extends Controller {
 		}
 		user.zipCode = ZipCodeInfo.getValidatedZipCode(userEdit.zipCode);
 		user.about = userEdit.about;
+		user.publicEmail = userEdit.publicEmail;
 		user.save();
 		flash("success", "Changes saved");
 		return Info.editUser(username);

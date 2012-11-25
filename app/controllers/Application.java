@@ -1,9 +1,6 @@
 package controllers;
 
-import java.util.regex.Pattern;
-
-import extra.Unit;
-
+import models.AchievementInfo;
 import models.Attend;
 import models.EventInfo;
 import models.UserGroup;
@@ -23,6 +20,10 @@ public class Application extends Controller {
 	
 	public static Result index() {
 		return redirect(routes.Lists.index());
+	}
+	
+	public static Result about() {
+		return ok(about.render());
 	}
 	
 	/////////
@@ -128,6 +129,8 @@ public class Application extends Controller {
     		Account account = accountForm.get();
     		UserInfo.create(account.fullname, account.username, account.email,
     				account.zipCode, account.password);
+    		//also create their AchievementInfo
+    		AchievementInfo.create(account.username);
     		flash("success", "Account created");
     		return redirect(routes.Application.login());
     	}

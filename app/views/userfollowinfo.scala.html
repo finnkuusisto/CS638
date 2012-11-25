@@ -7,7 +7,7 @@
         <div class="row-fluid">
         <a href="@routes.Info.viewUser(user.username)">
             <div class="span1">
-                <img src="@Gravatar.getURL(user.email,70,Gravatar.DFLT_MYSTERY_MAN)" class="img-polaroid">
+                <img src="@Gravatar.getURL(user.email,70,Gravatar.DFLT_MYSTERY_MAN,Gravatar.RTNG_PG)" class="img-polaroid">
             </div>
             <div class="span11">
                 <h1>
@@ -27,7 +27,7 @@
                     @for(user <- following) {
                         <tr>
                             <td>
-                                <img src="@Gravatar.getURL(user.email,24,Gravatar.DFLT_MYSTERY_MAN)">
+                                <img src="@Gravatar.getURL(user.email,24,Gravatar.DFLT_MYSTERY_MAN,Gravatar.RTNG_PG)">
                             </td>
                             <td>
                                 <a href="@routes.Info.viewUser(user.username)">@user.fullName</a>
@@ -44,7 +44,7 @@
                     @for(user <- followers) {
                         <tr>
                             <td>
-                                <img src="@Gravatar.getURL(user.email,24,Gravatar.DFLT_MYSTERY_MAN)">
+                                <img src="@Gravatar.getURL(user.email,24,Gravatar.DFLT_MYSTERY_MAN,Gravatar.RTNG_PG)">
                             </td>
                             <td>
                                 <a href="@routes.Info.viewUser(user.username)">@user.fullName</a>

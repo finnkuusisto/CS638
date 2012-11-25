@@ -107,7 +107,9 @@ public class Follow extends Model {
 			return;
 		}
 		Follow follow = Follow.findByBoth(follower, followed);
-		follow.delete();
+		if (follow != null) {
+			follow.delete();
+		}
 	}
 	
 }

@@ -23,9 +23,23 @@
         <form class="form-horizontal" action="@routes.Info.submitUserEdit(user.username)" method="post">
         
             <div class="control-group">
-                <label class="control-label" for="inputName">Full Name</label>
+                <label class="control-label" for="inputName">Full name</label>
                 <div class="controls">
                     <input type="text" id="inputName" placeholder="Full Name" name="fullName" value="@form("fullName").value">
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label class="control-label" for="inputZipcode">Zip code</label>
+                <div class="controls">
+                    <input type="text" id="inputZipcodee" placeholder="Zip code" name="zipCode" value="@form("zipCode").value">
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label class="control-label" for="inputURL">URL</label>
+                <div class="controls">
+                    <input type="text" id="inputURL" placeholder="http://" name="url" value="@form("url").value">
                 </div>
             </div>
             
@@ -39,7 +53,7 @@
             <div class="control-group">
                 <div class="controls">
                     <button class="btn btn-success" type="submit">Save changes</button>
-                    <a class="btn" href="@routes.Info.viewUser(user.username)">Cancel</a>
+                    <a class="btn" href="@routes.Info.viewUser(user.username)">Back to profile</a>
                 </div>
             </div>
             

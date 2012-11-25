@@ -1,6 +1,8 @@
 import java.util.List;
 import java.util.Map;
 
+import models.AchievementInfo;
+import models.UserInfo;
 import models.ZipCodeInfo;
 
 import com.avaje.ebean.Ebean;
@@ -25,6 +27,13 @@ public class Global extends GlobalSettings {
     			
     			// Insert users first
                 Ebean.save(all.get("users"));
+                //make all of their AchievementInfo records
+                for (UserInfo user : UserInfo.findAll()) {
+                	if (AchievementInfo.findAchievementInfoFor(user.username)
+                			== null) {
+                		AchievementInfo.create(user.username);
+                	}
+                }
                 // Then zip codes
                 Ebean.save(all.get("zips"));
     		}
