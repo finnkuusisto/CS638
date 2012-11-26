@@ -4,7 +4,7 @@
 
     <div class="container-fluid" style = "padding:50px; border:1px solid black;">
 	
-         <div class="well" style = "margin:10px; border:1px solid red;">
+         <div class="well" style = "margin:10px; border:1px solid black;">
           
     	@if(flash.contains("success")) {
         	<div class="alert alert-success">
@@ -12,17 +12,54 @@
             	@flash.get("success")
         	</div>
     	}
-            <h1> Heading</h1>
-            <form action="@routes.Application.editEvent(event.id)" method="post">
-            	<label>something</label><input type="text" value="@form("name").value" name="name">
-     	    	<label></label>
-     	    		<label></label>
-     	    	<input type="text" value="@form("distance").value" name="distance">
-     	    	<label></label>
-     	    	<label></label>
-     	    	<input type="text" value="@form("description").value" name="description">
-     	    	<label></label>
-     	    	
+
+            <form class="form-horizontal" action="@routes.Info.editEvent(event.id)" method="post">
+           	<legend>Edit Event</legend> 
+            <div class="control-group">
+                <label class="control-label" for="name">Name</label>
+                <div class="controls">
+                    <input id="name" type="text" value="@form("name").value" placeholder="Name" name="name">
+                </div>
+        	</div>
+        
+        	<div class="control-group">
+       	        	<label class="control-label" for="description">Description</label>
+                	<div class="controls">
+                  	<input id="description" value="@form("description").value" type="text" placeholder="Description" name="description">
+                	</div>
+        	</div>
+        
+        	<div class="control-group">
+                	<label class="control-label" for="routeDes">Route Description</label>
+                	<div class="controls">
+                     	<input type="text" id="routeDes" value="@form("routeDescription").value" placeholder="Describe the Route" name="routeDescription">
+                	</div>
+        	</div>
+        
+        	<div class="control-group">
+                <label class="control-label" for="pace">Pace</label>
+                <div class="controls">
+                  		<input id="pace" type="text" value="@form("pace").value" placeholder="Pace" name="pace">
+                </div>
+        	</div>
+        
+        	<div class="control-group">
+                <label class="control-label" for="distance">Distance</label>
+                <div class="controls">
+                      <input type="text" id="distance" value="@form("distance").value" placeholder="Distance" name="distance">
+                </div>
+        	</div>
+        
+        	<div class="control-group">
+                <label class="control-label" for="inputName">Unit</label>
+                <div class="controls">
+              	<select name="unit">
+  					<option value="Miles">Miles</option>
+  					<option value="Kilometers">Kilometers</option>
+  					<option value="Meters">Meters</option>  			
+				</select> </div>
+        	</div>
+            	            	     	    	
      	    	<button class="btn btn-primary" type="submit">Save Changes</button>
          		<button class="btn btn-primary" type="reset">Cancel</button>
      		</form> 

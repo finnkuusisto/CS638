@@ -1,40 +1,47 @@
-@(event: EventInfo, creator: Boolean)
+@(event: EventInfo, editable: Boolean, viewerAttending: Boolean, attending: List[UserInfo])
 
 @main("CS 638 Web Application") {
 
     <div class="container-fluid" style = "padding:50px; border:1px solid black;">
 	
-         <div class="well" style = "margin:10px; border:1px solid red;">
-            @if(creator){ 
+         <div class="well" style = "margin:10px; border:1px solid black;">
+           
     	@if(flash.contains("success")) {
         	<div class="alert alert-success">
             	<button type="button" class="close" data-dismiss="alert">&times;</button>
             	@flash.get("success")
         	</div>
-    	}
-            <h1> Heading</h1>
-            <form action="@routes.Application.editEvent(event.id)" method="post">
-            	<label>something</label><input type="text" value="@event.name" name="name">
-     	    	<label></label>
-     	    		<label></label>
-     	    	<input type="text" value="@event.distance" name="distance">
-     	    	<label></label>
-     	    	<label></label>
-     	    	<input type="text" value="@event.description" name="description">
-     	    	<label></label>
-     	    	
-     	    	<button class="btn btn-primary" type="submit">Save Changes</button>
-         		<button class="btn btn-primary" type="reset">Cancel</button>
-     		</form> 
-     	   
-     	    
-     	    } else {
-     	    	<p class="lead">@event.name</p>
-            	<p><a href="@routes.Info.viewUser(event.creatorUsername)">@event.creatorUsername</a></p>
-            	<p>@event.distance Miles</p>
+        	}
+       
+            <h1> @event.name
+            	@if(editable) {
+        		    <a class="btn" href="@routes.Info.editEvent(event.id)"><i class="icon-pencil"></i> Edit event</a> 
+       			 } else {
+       			 	@if(viewerAttending) {
+            			<a class="btn btn-danger" href="@routes.Info.attendEvent(event.id)">Unattend</a>    
+        			} else{
+            			<a class="btn btn-primary" href="@routes.Info.attendEvent(event.id)">Attend</a>
+            		}
+       			 
+       			 }
+       	    </h1>
+      
+     	    	<p><a href="@routes.Info.viewUser(event.creatorUsername)">@event.creatorUsername</a></p>
+            	<p>@event.distance @event.unit</p>
+            	<p>@event.pace</p>
             	<p>@event.description</p>
-            
-     	    }  
+            	<p>@event.routeDescription</p>
+            	     
+              	<legend>@attending.size() Attending</legend>
+                <div class="well well-small">
+                	@for(user <- attending) {
+                    	    <p class="lead" style="height:10px"><a href="@routes.Info.viewUser(user.username)">@user.fullName</a></p>
+                	}
+                </div>
+          
+
+         	
+         
      
         </div>
 	

@@ -55,7 +55,6 @@ public class UserInfo extends Model {
         return "User(" + email + ")";
     }
 
-    
     ///////////
     //Queries//
     ///////////

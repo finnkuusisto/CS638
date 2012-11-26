@@ -1,32 +1,81 @@
-@(user: UserInfo, editable: Boolean, followable: Boolean, following: Boolean)
+@(user: UserInfo, editable: Boolean, followable: Boolean, viewerFollowing: Boolean,
+following: Integer, followers: Integer, attending: Integer)
 
 @main("CS 638 Web Application") {
 
     <div class="container-fluid">
     
-        <h1>
-            @user.fullName
-            @if(editable) {
-                <a class="btn" href="@routes.Info.editUser(user.username)"><i class="icon-pencil"></i> Edit profile</a>
-            }
-            @if(followable) {
-                @if(following) {
-                    <a class="btn btn-danger" href="@routes.Info.followUser(user.username)"><i class="icon-minus icon-white"></i> Unfollow</a>
-                } else {
-                    <a class="btn btn-primary" href="@routes.Info.followUser(user.username)"><i class="icon-plus icon-white"></i> Follow</a>
+        <div class="row-fluid">
+            <div class="span12">
+                <h1>
+                    @user.fullName
+                    @if(editable) {
+                        <a class="btn pull-right" href="@routes.Info.editUser(user.username)"><i class="icon-pencil"></i> Edit profile</a>
+                    }
+                    @if(followable) {
+                        @if(viewerFollowing) {
+                            <a class="btn btn-danger pull-right" href="@routes.Info.followUser(user.username)"><i class="icon-minus icon-white"></i> Unfollow</a>
+                        } else {
+                            <a class="btn btn-primary pull-right" href="@routes.Info.followUser(user.username)"><i class="icon-plus icon-white"></i> Follow</a>
+                        }
+                    }
+                </h1>
+            </div>
+        </div>
+        
+        <hr>
+        
+        <div class="row-fluid">
+            <div class="span4">
+                
+                <img src="@Gravatar.getURL(user.email,280,Gravatar.DFLT_MYSTERY_MAN)" class="img-polaroid">
+                
+                <hr>
+                
+                <p><i class="icon-map-marker muted"></i> @ZipCodeInfo.getLocationString(user.zipCode)</p>
+                @if(user.publicEmail) {
+                    <p><i class="icon-envelope muted"></i> <a href="mailto:@user.email">@user.email</a></p>
                 }
-            }
-        </h1>
-        
-        <legend>About</legend>
-        <p>
-            @user.about
-        </p>
-        
-        <legend>Contact</legend>
-        <address>
-            <a href="mailto:@user.email">@user.email</a>
-        </address>
+                @if(user.url!=null&&user.url.length()>0) {
+                    <p><i class="icon-link muted"></i> <a href="@user.url">@user.url</a></p>
+                }
+                <p><i class="icon-time muted"></i> <span class="muted">Joined</span> <span id="join-date">Sometime<span></p>
+                <!-- Script for local time zone join date -->
+                <script>
+                    document.getElementById("join-date").innerHTML=shortDateString(@user.joinDate);
+                </script>
+                
+                <hr>
+                
+                <div class="row-fluid">
+                    <div class="span4">
+                        <strong>@following</strong>
+                        <p><a href="@routes.Info.viewUserFollowInfo(user.username)">Following</a></p>
+                    </div>
+                    <div class="span4">
+                        <strong>@followers</strong>
+                        <p><a href="@routes.Info.viewUserFollowInfo(user.username)">Followers</a></p>
+                    </div>
+                    <div class="span4">
+                        <strong>@attending</strong>
+                        <p><a href="@routes.Info.viewUserAttendInfo(user.username)">Attending</a></p>
+                    </div>
+                </div>
+                
+                <hr>
+                
+            </div>
+            <div class="span8">
+                <legend>About</legend>
+                @if(user.about!=null) {
+                    @for(para <- user.about.trim().split("\n+")) {
+                        <p>
+                            @para.trim()
+                        </p>
+                    }
+                }
+            </div>
+        </div>
 
     </div>
     

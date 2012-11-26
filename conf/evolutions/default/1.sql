@@ -3,6 +3,16 @@
 
 # --- !Ups
 
+create table achievement_info (
+  username                  varchar(255) not null,
+  first_event_creation      boolean,
+  first_event_attend        boolean,
+  first_event_attended_by_user boolean,
+  first_follow_user         boolean,
+  first_followed_by_user    boolean,
+  constraint pk_achievement_info primary key (username))
+;
+
 create table attend (
   id                        varchar(255) not null,
   username                  varchar(255),
@@ -72,6 +82,8 @@ create table zip_code_info (
   constraint pk_zip_code_info primary key (zipcode))
 ;
 
+create sequence achievement_info_seq;
+
 create sequence attend_seq;
 
 create sequence event_info_seq;
@@ -93,6 +105,8 @@ create sequence zip_code_info_seq;
 
 SET REFERENTIAL_INTEGRITY FALSE;
 
+drop table if exists achievement_info;
+
 drop table if exists attend;
 
 drop table if exists event_info;
@@ -108,6 +122,8 @@ drop table if exists user_info;
 drop table if exists zip_code_info;
 
 SET REFERENTIAL_INTEGRITY TRUE;
+
+drop sequence if exists achievement_info_seq;
 
 drop sequence if exists attend_seq;
 

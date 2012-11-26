@@ -23,14 +23,14 @@
         <form class="form-horizontal" action="@routes.Info.submitUserEdit(user.username)" method="post">
         
             <div class="control-group">
-                <label class="control-label" for="inputName">Full Name</label>
+                <label class="control-label" for="inputName">Full name</label>
                 <div class="controls">
                     <input type="text" id="inputName" placeholder="Full Name" name="fullName" value="@form("fullName").value">
                 </div>
             </div>
             
             <div class="control-group">
-                <label class="control-label" for="inputZipcode">URL</label>
+                <label class="control-label" for="inputZipcode">Zip code</label>
                 <div class="controls">
                     <input type="text" id="inputZipcodee" placeholder="Zip code" name="zipCode" value="@form("zipCode").value">
                 </div>
@@ -47,6 +47,13 @@
                 <label class="control-label" for="inputAbout">About</label>
                 <div class="controls">
                     <textarea class="input-xlarge" rows="3" id="inputAbout" placeholder="About" name="about">@form("about").value</textarea>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label class="control-label" for="inputPublicEmail">Public email</label>
+                <div class="controls">
+                    <input type="checkbox" id="inputPublicEmail" name="publicEmail" @if(form("publicEmail").value.equals("true")){checked}></input>
                 </div>
             </div>
         
