@@ -14,6 +14,9 @@ import play.data.validation.*;
 
 import com.avaje.ebean.*;
 
+import extra.PaceUtil;
+import extra.SortContainer;
+
 /**
  * User entity managed by Ebean
  */
@@ -31,6 +34,8 @@ public class UserInfo extends Model {
     public long joinDate;
     public String url;
     
+    public long predicted5k;
+    
     public String passHash;
     public String salt;
     
@@ -42,6 +47,8 @@ public class UserInfo extends Model {
     	this.zipCode = ZipCodeInfo.getValidatedZipCode(zipCode);
     	this.joinDate = joinDate;
     	this.url = "";
+    	//we'll start predicted 5k at 27 minutes
+    	this.predicted5k = PaceUtil.timeToSec(27, 0);
     	this.salt = UserInfo.newSalt();
     	this.passHash = UserInfo.hashPassword(password, this.salt);
     }
@@ -115,6 +122,36 @@ public class UserInfo extends Model {
         }
         //check password
     	return user.authenticate(password);
+    }
+    
+    //////////////////////
+    //Suggestion Helpers//
+    //////////////////////
+    
+    public static List<UserInfo> getSuggestedUsers(String username) {
+    	//first find the user we're suggesting for
+    	List<UserInfo> ret = new ArrayList<UserInfo>(10);
+    	UserInfo thisUser = UserInfo.findByUsername(username);
+    	if (thisUser == null) {
+    		return ret;
+    	}
+    	//just compare predicted 5k times of everyone else
+    	List<UserInfo> all = UserInfo.findAll();  //TODO limit to nearby users
+    	Queue<SortContainer<UserInfo>> sorted =
+    			new PriorityQueue<SortContainer<UserInfo>>();
+    	for (UserInfo user : all) {
+    		//skip the user we're suggesting for
+    		if (!user.username.equals(thisUser.username)) {
+    			double sortVal =
+    					Math.abs(thisUser.predicted5k - user.predicted5k);
+    			sorted.offer(new SortContainer<UserInfo>(sortVal, user));
+    		}
+    	}
+    	//now only return the 10 closest other users
+    	for (int i = 0; !sorted.isEmpty() && i < 10; i++) {
+    		ret.add(sorted.remove().obj);
+    	}
+    	return ret;
     }
     
     ////////////

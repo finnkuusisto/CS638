@@ -9,8 +9,10 @@ import play.db.ebean.Model;
 public class AchievementInfo extends Model {
 	
 	@Id
-	public String username;
+	public String id;
 	
+	//username probably could be primary, but it's technically foreign
+	public String username;
 	public boolean firstEventCreation;
 	public boolean firstEventAttend;
 	public boolean firstEventAttendedByUser;
