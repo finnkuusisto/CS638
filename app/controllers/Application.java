@@ -171,7 +171,7 @@ public class Application extends Controller {
     ////////////////////
     //Event Creation//
     ////////////////////
-    
+ 
     public static class Event {
     	
     	public String name;
@@ -234,5 +234,20 @@ public class Application extends Controller {
     }
     
   */
+
+    public static class Comment {
+    	
+    	public String username;
+    	public String comment;
+    	public long time;
+    	//id of the event being attended
+    	public String eventID;
+    	
+    	public String validate() {
+    		//TODO validate this shiz
+    		return null;
+    	}
+    	
+    }
 
 }

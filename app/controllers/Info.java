@@ -14,11 +14,24 @@ import play.mvc.Controller;
 
 import views.html.*;
 
+
 public class Info extends Controller {
 	
 	///////////////
 	// EventInfo //
 	///////////////
+	
+    public static class CommentSubmit {
+    	
+    	public String username;
+    	public String comment;
+    	
+    	public String validate() {
+    		//TODO validate this shiz
+    		return null;
+    	}
+    	
+    }
 	
 	public static Result viewEvent(String id) {
 		EventInfo event = EventInfo.findByID(id);
@@ -32,8 +45,12 @@ public class Info extends Controller {
 		}
 		
 		List<UserInfo> attending = UserInfo.findUsers(Attend.findUsersAttending(id));
+		CommentSubmit comment =  new CommentSubmit();
+		Form<CommentSubmit> commentForm = form(CommentSubmit.class).fill(comment);
 		
-		return ok(eventinfo.render(event,creator, isAttending, attending));
+		List<Comment> comments = Comment.findCommentsForEvent(id);
+		
+		return ok(eventinfo.render(commentForm,event,creator, isAttending, attending, comments));
 	}
 	
 	  public static Result editEvent(String id){
@@ -43,9 +60,29 @@ public class Info extends Controller {
     		EventInfoEdit editEvent =  new EventInfoEdit(event);
     		Form<EventInfoEdit> form = form(EventInfoEdit.class).fill(editEvent);
     		return ok(editeventinfo.render(event, form));
-    	
-	    	
 	    }
+	  
+		public static Result submitComment(String id) {
+			  EventInfo event = EventInfo.findByID(id);
+				if (event == null) {
+					//TODO make our own 404 perhaps?
+					return notFound();
+				}
+			
+				//now do the edit based on the form content
+		    	Form<CommentSubmit> commentForm =
+		    			form(CommentSubmit.class).bindFromRequest();
+		
+		    	CommentSubmit comment = commentForm.get();
+		    	
+		    	Comment.create(session().get("username"), comment.comment, id);
+		    	
+		    	
+		    	
+			return viewEvent(id);
+		
+		}
+	  
 	  
 		public static Result submitEventEdit(String id) {
 			  EventInfo event = EventInfo.findByID(id);
@@ -97,7 +134,8 @@ public class Info extends Controller {
 			return redirect(routes.Info.viewEvent(eventID));
 		}
 
-	  
+	 
+		
 	  public static class EventInfoEdit {
 			
 		 	public String name;

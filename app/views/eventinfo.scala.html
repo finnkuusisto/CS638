@@ -1,4 +1,4 @@
-@(event: EventInfo, editable: Boolean, viewerAttending: Boolean, attending: List[UserInfo])
+@(form: Form[Info.CommentSubmit], event: EventInfo, editable: Boolean, viewerAttending: Boolean, attending: List[UserInfo], comments: List[Comment])
 
 @main("CS 638 Web Application") {
 
@@ -25,25 +25,52 @@
        			 
        			 }
        	    </h1>
-      
+         <div class="row-fluid">
+            <div class="span4">
      	    	<p><a href="@routes.Info.viewUser(event.creatorUsername)">@event.creatorUsername</a></p>
-            	<p>@event.distance @event.unit</p>
-            	<p>@event.pace</p>
+            	<p>Distance: @event.distance @event.unit</p>
+            	<p>Pace: @event.pace</p>
             	<p>@event.description</p>
-            	<p>@event.routeDescription</p>
-            	     
+            	
               	<legend>@attending.size() Attending</legend>
-                <div class="well well-small">
-                	@for(user <- attending) {
-                    	    <p class="lead" style="height:10px"><a href="@routes.Info.viewUser(user.username)">@user.fullName</a></p>
-                	}
+                	<div class="well well-small">
+                		@for(user <- attending) {
+                    	    	<p class="lead" style="height:10px"><a href="@routes.Info.viewUser(user.username)">@user.fullName</a></p>
+                		}
+                	</div>
+                
+           </div>
+           	<div class="span8">
+                <legend>Route</legend>
+              	<p>	@event.routeDescription </p>
+            </div>
+            
+          <form class="form-vertical" action="@routes.Info.submitComment(event.id)" method="post">
+      
+            <div class="control-group">
+                <label class="control-label" for="comment">Comments</label>
+                <div class="controls">
+                    <textarea class="input-xlarge" rows="3" id="comment" placeholder="Comment" name="comment"></textarea>
                 </div>
+            </div>
+            
+            <div class="control-group">
+                <div class="controls">
+                    <button class="btn btn-success" type="submit">Comment</button>
+               </div>
+            </div>
+            
+          </form>
           
-
-         	
-         
+          <legend>@comments.size() Comments</legend>
+                	<div class="well well-small">
+                		@for(comment <- comments) {
+                    	    	<p> @comment.comment</p>
+                		}
+                	</div>
+         </div>     
      
-        </div>
+       </div>
 	
     </div>
     
