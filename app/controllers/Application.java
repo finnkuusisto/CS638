@@ -26,6 +26,22 @@ public class Application extends Controller {
 		return ok(about.render());
 	}
 	
+	////////
+	//Feed//
+	////////
+	
+	public static Result viewFeed() {
+		//first check if someone is logged in
+		String username = session().get("username");
+		//TODO better security (check if actually logged in)
+		if (username != null) {
+			return Info.viewUserFeed(username);
+		}
+		//otherwise, tell them to login and give them a general feed
+		flash("info","Sign in, or sign up, to get a personalized feed");
+		return ok(feed.render(false,null));
+	}
+	
 	/////////
 	//Login//
 	/////////

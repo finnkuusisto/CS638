@@ -353,6 +353,11 @@ public class Info extends Controller {
 		return redirect(routes.Info.viewUser(username));
 	}
 	
+	public static Result viewUserFeed(String username) {
+		List<UserInfo> suggestedUsers = UserInfo.getSuggestedUsers(username);
+		return ok(feed.render(true,suggestedUsers));
+	}
+	
 	///////////////
 	// UserGroup //
 	///////////////

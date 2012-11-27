@@ -41,6 +41,9 @@ GET     /user/:username/followers   controllers.Info.viewUserFollowInfo(username
 GET     /user/:username/attending   controllers.Info.viewUserAttendInfo(username)
 GET     /group/:id                  controllers.Info.viewGroup(id)
 
+# Feed
+GET     /feed                       controllers.Application.viewFeed()
+
 # Follow User
 GET     /user/:username/follow      controllers.Info.followUser(username)
 

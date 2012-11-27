@@ -1,5 +1,6 @@
 package models;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -22,6 +23,7 @@ public class EventInfo extends Model {
     @Id
    public String id;
 
+    public long createDate;
 	public String creatorUsername;
 	public String name;
 	public String description;
@@ -30,7 +32,9 @@ public class EventInfo extends Model {
 	public String pace;
 	public String routeDescription;
 	
-	public EventInfo(String creatorUsername, String name, String description, double distance, String unit, String routeDescription, String pace){
+	public EventInfo(String creatorUsername, String name, String description,
+			double distance, String unit, String routeDescription, String pace,
+			long createDate){
 		this.creatorUsername = creatorUsername;
 		this.name = name;
 		this.description = description;
@@ -43,7 +47,8 @@ public class EventInfo extends Model {
 			this.unit = Unit.meters;
 		} else if(unit.equals("Kilometers")) {
 			this.unit = Unit.kilometers;		
-		}	
+		}
+		this.createDate = createDate;
 	}
 	
 	///////////
@@ -63,7 +68,10 @@ public class EventInfo extends Model {
 
     public static EventInfo create(String creatorUsername, String name,
     		String description, double distance, String unit, String routeDescription, String pace) {
-    	EventInfo group = new EventInfo(creatorUsername, name, description,distance,unit, routeDescription, pace);
+    	//Date objects are always UTC/GMT
+    	Date now = new Date();
+    	EventInfo group = new EventInfo(creatorUsername, name, description,
+    			distance,unit, routeDescription, pace, now.getTime());
     	group.save();
     	return group;
     }

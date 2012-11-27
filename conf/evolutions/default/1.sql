@@ -4,13 +4,14 @@
 # --- !Ups
 
 create table achievement_info (
-  username                  varchar(255) not null,
+  id                        varchar(255) not null,
+  username                  varchar(255),
   first_event_creation      boolean,
   first_event_attend        boolean,
   first_event_attended_by_user boolean,
   first_follow_user         boolean,
   first_followed_by_user    boolean,
-  constraint pk_achievement_info primary key (username))
+  constraint pk_achievement_info primary key (id))
 ;
 
 create table attend (
@@ -22,6 +23,7 @@ create table attend (
 
 create table event_info (
   id                        varchar(255) not null,
+  create_date               bigint,
   creator_username          varchar(255),
   name                      varchar(255),
   description               varchar(255),
@@ -42,11 +44,13 @@ create table follow (
 
 create table run_time (
   id                        varchar(255) not null,
+  username                  varchar(255),
   title                     varchar(255),
   time                      integer,
-  distance                  double,
-  unit                      integer,
-  constraint ck_run_time_unit check (unit in (0,1,2)),
+  km                        double,
+  display_unit              integer,
+  date                      bigint,
+  constraint ck_run_time_display_unit check (display_unit in (0,1,2)),
   constraint pk_run_time primary key (id))
 ;
 
@@ -67,6 +71,7 @@ create table user_info (
   about                     TEXT,
   join_date                 bigint,
   url                       varchar(255),
+  predicted5k               bigint,
   pass_hash                 varchar(255),
   salt                      varchar(255),
   constraint pk_user_info primary key (username))
