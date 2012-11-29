@@ -53,14 +53,16 @@
                 <div class="controls">
                       <input type="text" id="distance" placeholder="Distance" name="distance">
                 </div>
+                
         </div>
         
-      <label></label>
-		<select name="unit">
-  			<option value="Miles">Miles</option>
-  			<option value="Kilometers">Kilometers</option>
-  			<option value="Meters">Meters</option>  			
-		</select>
+     	 <div class="control-group">
+			<select name="unit">
+	  			<option value="Miles">Miles</option>
+	  			<option value="Kilometers">Kilometers</option>
+	  			<option value="Meters">Meters</option>  			
+			</select>
+		</div>
 		
         <button class="btn btn-primary" type="submit">Create</button>
         <a class="btn" href="@routes.Application.index()">Cancel</a>

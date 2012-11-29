@@ -32,11 +32,13 @@ public class Info extends Controller {
     	}
     	
     }
+    
 	
 	public static Result viewEvent(String id) {
 		EventInfo event = EventInfo.findByID(id);
 		Boolean creator = false;
-		if(event.creatorUsername.equals(session().get("username"))){
+		String viewerUsername = session().get("username");
+		if(event.creatorUsername.equals(viewerUsername)){
 		creator = true;
 		}
 		Boolean isAttending = false;
@@ -50,7 +52,7 @@ public class Info extends Controller {
 		
 		List<Comment> comments = Comment.findCommentsForEvent(id);
 		
-		return ok(eventinfo.render(commentForm,event,creator, isAttending, attending, comments));
+		return ok(eventinfo.render(commentForm,event,viewerUsername, creator, isAttending, attending, comments));
 	}
 	
 	  public static Result editEvent(String id){
@@ -79,6 +81,26 @@ public class Info extends Controller {
 		    	
 		    	
 		    	
+			return viewEvent(id);
+		
+		}
+		
+		public static Result deleteComment(String id, String commentID){
+		
+			EventInfo event = EventInfo.findByID(id);
+			Comment comment = Comment.findByID(commentID);
+			
+			if (event == null || comment == null) {
+				//TODO make our own 404 perhaps?
+				return notFound();
+			
+				
+			}
+			String username = session().get("username");
+			if(username.equals(comment.username)){
+				Comment.delete(id, commentID);
+			}
+			
 			return viewEvent(id);
 		
 		}

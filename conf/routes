@@ -5,6 +5,9 @@
 # Home page
 GET     /                           controllers.Application.index()
 GET     /about                      controllers.Application.about()
+GET     /contact					controllers.Application.contact()
+POST    /submit						controllers.Application.submitMessage()
+
 
 # Authentication
 GET     /login                      controllers.Application.login()
@@ -34,6 +37,7 @@ GET     /lists/events               controllers.Lists.events()
 # Info Pages
 GET     /event/:id                  controllers.Info.viewEvent(id)
 POST    /event/:id					controllers.Info.submitComment(id)
+POST    /event/:id/delete			controllers.Info.deleteComment(id, commentID)
 GET     /event/:id/edit             controllers.Info.editEvent(id)
 POST    /event/:id/edit             controllers.Info.submitEventEdit(id)
 GET     /user/:username             controllers.Info.viewUser(username)
@@ -43,6 +47,7 @@ GET     /user/:username/followers   controllers.Info.viewUserFollowInfo(username
 GET     /user/:username/attending   controllers.Info.viewUserAttendInfo(username)
 GET     /user/:username/racetimes   controllers.Info.viewRaceTimes(username)
 GET     /group/:id                  controllers.Info.viewGroup(id)
+
 
 # Feed
 GET     /feed                       controllers.Application.viewFeed()
