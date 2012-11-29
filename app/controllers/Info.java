@@ -4,6 +4,7 @@ import java.util.List;
 
 import controllers.Application.Account;
 import controllers.Application.Event;
+import extra.PaceUtil;
 import extra.Unit;
 import play.*;
 import play.mvc.*;
@@ -387,12 +388,12 @@ public class Info extends Controller {
 	public static class RaceTimeEdit {
 		
 		public String title;
-		public int hours;
-		public int min;
-		public int sec;
-		public double distance;
+		public int hours = 0;
+		public int min = 0;
+		public int sec = 0;
+		public double distance = 0;
 		public String unit;
-		public long date;
+		public long date = 0;
 		
 		public String validate() {
 			if (hours < 0 || min < 0 || sec < 0) {
@@ -412,21 +413,57 @@ public class Info extends Controller {
 		}
 		
 	}
-	
+
 	public static Result viewRaceTimes(String username) {
 		UserInfo user = UserInfo.findByUsername(username);
 		if (user == null) {
 			//TODO make our own 404 perhaps?
-			return notFound();
+			return Application.index();
+		}
+		//TODO better security
+		else if (!username.equals(session().get("username"))) {
+			return Info.viewUser(username);
 		}
 		//TODO better security
 		List<RaceTime> times = RaceTime.findByUsername(username);
-
-		return ok(viewracetimes.render(user, times, null));
+		Form<RaceTimeEdit> form = form(RaceTimeEdit.class);
+		return ok(viewracetimes.render(user, times, form));
 	}
 	
-	public static Result addRaceTime() {
-		return notFound();
+	public static Result submitRaceTime() {
+		//TODO security
+		String username = session().get("username");
+		if (username == null) {
+			return Application.index();
+		}
+		//bind the form content
+    	Form<RaceTimeEdit> form =
+    			form(RaceTimeEdit.class).bindFromRequest();
+    	if (form.hasErrors()) {
+    		Logger.info(form.toString());
+    		flash("error", form.globalError().message());
+    		return Info.viewRaceTimes(username);
+    	}
+    	//otherwise we were successful
+    	RaceTimeEdit rt = form.get();
+    	double km = 0;
+    	Unit unit = null;
+    	if (rt.unit.equals("km")) {
+    		km = rt.distance;
+    		unit = Unit.kilometers;
+    	}
+    	else if (rt.unit.equals("mi.")) {
+    		km = PaceUtil.mileToKm(rt.distance);
+    		unit = Unit.miles;
+    	}
+    	else {
+    		km = rt.distance / 1000;
+    		unit = Unit.meters;
+    	}
+    	RaceTime.create(username, rt.title, PaceUtil.timeToSec(rt.hours, rt.min,
+    			rt.sec), km, unit, rt.date);
+		flash("success", "Race time added");
+		return Info.viewRaceTimes(username);
 	}
 	
 	public static Result deleteRaceTime(String id) {

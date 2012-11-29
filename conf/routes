@@ -33,6 +33,8 @@ GET     /lists/groups               controllers.Lists.groups()
 GET     /lists/events               controllers.Lists.events()
 
 # Race times
+POST    /racetime/submit            controllers.Info.submitRaceTime()
+POST    /racetime/delete/:id        controllers.Info.deleteRaceTime(id)
 
 # Info Pages
 GET     /event/:id                  controllers.Info.viewEvent(id)

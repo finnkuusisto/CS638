@@ -71,6 +71,10 @@ public class RaceTime extends Model {
     			findList();
     }
     
+    public static RaceTime findByID(String id) {
+    	return find.where().eq("id", id).findUnique();
+    }
+    
     public static void create(String username, String title, int time,
     		double km, Unit displayUnit, long date) {
     	RaceTime rt = new RaceTime(username, title, time, km, displayUnit, date);

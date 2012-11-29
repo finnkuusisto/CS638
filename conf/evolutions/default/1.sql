@@ -59,8 +59,8 @@ create table race_time (
   km                        double,
   display_unit              integer,
   date                      bigint,
-  constraint ck_run_time_display_unit check (display_unit in (0,1,2)),
-  constraint pk_run_time primary key (id))
+  constraint ck_race_time_display_unit check (display_unit in (0,1,2)),
+  constraint pk_race_time primary key (id))
 ;
 
 create table user_group (
@@ -81,6 +81,8 @@ create table user_info (
   join_date                 bigint,
   url                       varchar(255),
   predicted5k               bigint,
+  last_login                bigint,
+  login_count               bigint,
   pass_hash                 varchar(255),
   salt                      varchar(255),
   constraint pk_user_info primary key (username))
@@ -158,3 +160,4 @@ drop sequence if exists user_group_seq;
 drop sequence if exists user_info_seq;
 
 drop sequence if exists zip_code_info_seq;
+

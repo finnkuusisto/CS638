@@ -106,12 +106,26 @@
                 <div class="span10">
                 
                     <!-- Alert  messages go above the main content -->
+                    <div class="container-fluid">
                     @if(flash.contains("info")) {
                         <div class="alert alert-info">
                             <button type="button" class="close" data-dismiss="alert">&times;</button>
                             @flash.get("info")
                         </div>
                     }
+                    @if(flash.contains("success")) {
+                        <div class="alert alert-success">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            @flash.get("success")
+                        </div>
+                    }
+                    @if(flash.contains("error")) {
+                        <div class="alert alert-error">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            @flash.get("error")
+                        </div>
+                    }
+                    </div>
                 
                     @content
                 </div>
