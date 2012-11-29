@@ -21,6 +21,15 @@ create table attend (
   constraint pk_attend primary key (id))
 ;
 
+create table comment (
+  id                        varchar(255) not null,
+  username                  varchar(255),
+  comment                   varchar(255),
+  time                      bigint,
+  event_id                  varchar(255),
+  constraint pk_comment primary key (id))
+;
+
 create table event_info (
   id                        varchar(255) not null,
   create_date               bigint,
@@ -91,6 +100,8 @@ create sequence achievement_info_seq;
 
 create sequence attend_seq;
 
+create sequence comment_seq;
+
 create sequence event_info_seq;
 
 create sequence follow_seq;
@@ -114,6 +125,8 @@ drop table if exists achievement_info;
 
 drop table if exists attend;
 
+drop table if exists comment;
+
 drop table if exists event_info;
 
 drop table if exists follow;
@@ -131,6 +144,8 @@ SET REFERENTIAL_INTEGRITY TRUE;
 drop sequence if exists achievement_info_seq;
 
 drop sequence if exists attend_seq;
+
+drop sequence if exists comment_seq;
 
 drop sequence if exists event_info_seq;
 

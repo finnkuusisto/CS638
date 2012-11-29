@@ -59,6 +59,12 @@ public class Comment extends Model {
 	}
 	
 
+	
+	public static Comment findByID(String id) {
+		return find.where().eq("id", id).findUnique();
+	}
+	
+
 	public static void create(String username, String comment, String eventID) {
 		if (username == null || eventID == null || comment == null) {
 			return;
@@ -67,6 +73,14 @@ public class Comment extends Model {
 		Comment newComment = new Comment(username,comment, eventID, now.getTime());
 		newComment.save();
 	}
+	public static void delete(String eventID, String commentID) {
+			if (eventID == null || commentID == null) {
+				return;
+			}
+			Comment theComment = find.where().eq("id", commentID).eq("eventID",
+					eventID).findUnique();
+			theComment.delete();
+		}
 	
 	public static void delete(String username, String comment, long time, String eventID) {
 		if (username == null || eventID == null || comment == null) {
@@ -76,6 +90,7 @@ public class Comment extends Model {
 				eventID).eq("comment", comment).eq("time", time).findUnique();
 		theComment.delete();
 	}
+	
 	
 	
 }
