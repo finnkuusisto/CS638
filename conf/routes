@@ -5,6 +5,9 @@
 # Home page
 GET     /                           controllers.Application.index()
 GET     /about                      controllers.Application.about()
+GET     /contact					controllers.Application.contact()
+POST    /submit						controllers.Application.submitMessage()
+
 
 # Authentication
 GET     /login                      controllers.Application.login()

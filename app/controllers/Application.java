@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.Info.EventInfoEdit;
 import models.AchievementInfo;
 import models.Attend;
 import models.EventInfo;
@@ -10,6 +11,7 @@ import play.*;
 import play.data.*;
 import play.data.validation.*;
 import play.mvc.*;
+import play.libs.*;
 
 import views.html.*;
 
@@ -24,6 +26,48 @@ public class Application extends Controller {
 	
 	public static Result about() {
 		return ok(about.render());
+	}
+	
+	public static Result contact(){
+		return ok(contact.render());
+	}
+	
+	public static class Message {
+	    	
+	    	public String message;
+	    	public String name;
+	    	public String email;
+	    	
+	    	public String validate() {
+	    		//TODO validate this shiz
+	    		return null;
+	    	}
+	    	
+	}
+	
+	
+	
+	public static Result submitMessage(){
+	
+		Form<Message> messageForm =
+			form(Message.class).bindFromRequest();
+		if (messageForm.hasErrors()) {
+			return badRequest(contact.render());
+		}
+		//otherwise we were successful
+		Message message = messageForm.get();
+	
+	/*	
+		SimpleEmail email = new SimpleEmail();
+		email.setFrom(message.email);
+		email.addTo("marathonpaulb@gmail.com");
+		email.setSubject("Message from Running Website");
+		email.setMsg(message.message);
+		Mail.send(email); 
+		*/
+		return ok(contact.render());
+			
+		
 	}
 	
 	////////

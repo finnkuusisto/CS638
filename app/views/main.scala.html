@@ -51,7 +51,7 @@
                         <ul class="nav">
                             <li><a href="@routes.Application.index()">Home</a></li>
                             <li><a href="@routes.Application.about()">About</a></li>
-                            <li><a href="#contact">Contact</a></li>
+                            <li><a href="@routes.Application.contact()">Contact</a></li>
                             <li class="divider-vertical"></li>
                             @if(session.contains("username")) {
                                 <li><a href="@routes.Info.viewUser(session.get("username"))">Profile</a></li>

@@ -1,0 +1,42 @@
+@()
+
+@main("CS 638 Web Application") {
+
+<div class="container-fluid">
+
+    <div class="row-fluid">
+        <legend>Contact</legend>
+    
+    
+    	<form class="form-vertical" action="@routes.Application.submitMessage()" method="post">
+		  
+		  		
+				<div class="control-group">
+					 <div class="control-group">
+            		    <label class="control-label" for="name">Name</label>
+             		   <div class="controls">
+              		    <input id="description" type="text" placeholder="Name" name="name">
+              		   </div>
+              		   
+              		   <label class="control-label" for="email">Email</label>
+             		   <div class="controls">
+              		    <input id="description" type="text" placeholder="Email" name="email">
+              		   </div>
+              		   
+					<div class="controls">
+						<textarea class="input-xlarge" rows="3" id="message" placeholder="Message" name="message"></textarea>
+					</div>
+				</div>
+				
+					
+				<div class="control-group">
+				   <div class="controls">
+						<button class="btn btn-success" type="submit">Submit</button>
+				   </div>
+				</div>
+		</form>
+    </div>
+   
+</div>
+
+}

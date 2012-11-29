@@ -45,40 +45,38 @@
               	<p>	@event.routeDescription </p>
             </div>
             
-			<div class="span8">
-					<legend>@comments.size() Comments</legend>
-					<div class="well well-small">
-							@for(comment <- comments) {
-									
-									<div class="well well-small">
-											<p class="lead" style="height:10px"><a href="@routes.Info.viewUser(comment.username)">@comment.username</a></p>
-											<p> @comment.comment</p>
-											@if(viewerUsername.equals(comment.username)) {
-												<form class="form-vertical" action="@routes.Info.deleteComment(event.id,comment.id)" method="post">
-													<button class="btn btn-danger pull-right" type="submit"><i class="icon-minus icon-white"></i> Delete</a>
-												</form>
-											}
-										
-									</div>
-							}
-					</div>
-				<form class="form-vertical" action="@routes.Info.submitComment(event.id)" method="post">
-		  
-					<div class="control-group">
-						<legend>New Comment</legend>
-						<div class="controls">
-							<textarea class="input-xlarge" rows="3" id="comment" placeholder="Comment" name="comment"></textarea>
-						</div>
-					</div>
-					
-					<div class="control-group">
-					   <div class="controls">
-							<button class="btn btn-success" type="submit">Comment</button>
-					   </div>
-					</div>
-				</form>
-			</div>
-        
+          <legend>@comments.size() Comments</legend>
+                	<div class="well well-small">
+                		@for(comment <- comments) {
+                    	    	
+                    	    	<div class="well well-small">
+                    	    			<p class="lead" style="height:10px"><a href="@routes.Info.viewUser(comment.username)">@comment.username</a></p>
+                				    	<p> @comment.comment</p>
+                				    	@if(viewerUsername.equals(comment.username)) {
+               				    	    	<form class="form-vertical" action="@routes.Info.deleteComment(event.id,comment.id)" method="post">
+                				    			<button class="btn btn-danger pull-right" type="submit"><i class="icon-minus icon-white"></i> Delete</a>
+                        					</form>
+                        				}
+                					
+                				</div>
+                    	}
+                	</div>
+             <form class="form-vertical" action="@routes.Info.submitComment(event.id)" method="post">
+      
+            <div class="control-group">
+                <label class="control-label" for="comment">New Comment</label>
+                <div class="controls">
+                    <textarea class="input-xlarge" rows="3" id="comment" placeholder="Comment" name="comment"></textarea>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <div class="controls">
+                    <button class="btn btn-success" type="submit">Comment</button>
+               </div>
+            </div>
+            
+			</form>
          </div>     
      
        </div>
