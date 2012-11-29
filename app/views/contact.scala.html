@@ -6,7 +6,12 @@
 
     <div class="row-fluid">
         <legend>Contact</legend>
-    
+    	@if(flash.contains("success")) {
+        	<div class="alert alert-success">
+            	<button type="button" class="close" data-dismiss="alert">&times;</button>
+            	@flash.get("success")
+        	</div>
+        	}
     
     	<form class="form-vertical" action="@routes.Application.submitMessage()" method="post">
 		  

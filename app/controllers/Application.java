@@ -56,15 +56,8 @@ public class Application extends Controller {
 		}
 		//otherwise we were successful
 		Message message = messageForm.get();
-	
-	/*	
-		SimpleEmail email = new SimpleEmail();
-		email.setFrom(message.email);
-		email.addTo("marathonpaulb@gmail.com");
-		email.setSubject("Message from Running Website");
-		email.setMsg(message.message);
-		Mail.send(email); 
-		*/
+		flash("success", "Message Sent");
+		
 		return ok(contact.render());
 			
 		
