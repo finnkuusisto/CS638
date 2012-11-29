@@ -21,6 +21,15 @@ create table attend (
   constraint pk_attend primary key (id))
 ;
 
+create table comment (
+  id                        varchar(255) not null,
+  username                  varchar(255),
+  comment                   varchar(255),
+  time                      bigint,
+  event_id                  varchar(255),
+  constraint pk_comment primary key (id))
+;
+
 create table event_info (
   id                        varchar(255) not null,
   create_date               bigint,
@@ -42,7 +51,7 @@ create table follow (
   constraint pk_follow primary key (id))
 ;
 
-create table run_time (
+create table race_time (
   id                        varchar(255) not null,
   username                  varchar(255),
   title                     varchar(255),
@@ -50,8 +59,8 @@ create table run_time (
   km                        double,
   display_unit              integer,
   date                      bigint,
-  constraint ck_run_time_display_unit check (display_unit in (0,1,2)),
-  constraint pk_run_time primary key (id))
+  constraint ck_race_time_display_unit check (display_unit in (0,1,2)),
+  constraint pk_race_time primary key (id))
 ;
 
 create table user_group (
@@ -72,6 +81,8 @@ create table user_info (
   join_date                 bigint,
   url                       varchar(255),
   predicted5k               bigint,
+  last_login                bigint,
+  login_count               bigint,
   pass_hash                 varchar(255),
   salt                      varchar(255),
   constraint pk_user_info primary key (username))
@@ -91,11 +102,13 @@ create sequence achievement_info_seq;
 
 create sequence attend_seq;
 
+create sequence comment_seq;
+
 create sequence event_info_seq;
 
 create sequence follow_seq;
 
-create sequence run_time_seq;
+create sequence race_time_seq;
 
 create sequence user_group_seq;
 
@@ -114,11 +127,13 @@ drop table if exists achievement_info;
 
 drop table if exists attend;
 
+drop table if exists comment;
+
 drop table if exists event_info;
 
 drop table if exists follow;
 
-drop table if exists run_time;
+drop table if exists race_time;
 
 drop table if exists user_group;
 
@@ -132,11 +147,13 @@ drop sequence if exists achievement_info_seq;
 
 drop sequence if exists attend_seq;
 
+drop sequence if exists comment_seq;
+
 drop sequence if exists event_info_seq;
 
 drop sequence if exists follow_seq;
 
-drop sequence if exists run_time_seq;
+drop sequence if exists race_time_seq;
 
 drop sequence if exists user_group_seq;
 

@@ -29,6 +29,8 @@ GET     /lists/users                controllers.Lists.users()
 GET     /lists/groups               controllers.Lists.groups()
 GET     /lists/events               controllers.Lists.events()
 
+# Race times
+
 # Info Pages
 GET     /event/:id                  controllers.Info.viewEvent(id)
 POST    /event/:id					controllers.Info.submitComment(id)
@@ -39,6 +41,7 @@ GET     /user/:username/edit        controllers.Info.editUser(username)
 POST    /user/:username             controllers.Info.submitUserEdit(username)
 GET     /user/:username/followers   controllers.Info.viewUserFollowInfo(username)
 GET     /user/:username/attending   controllers.Info.viewUserAttendInfo(username)
+GET     /user/:username/racetimes   controllers.Info.viewRaceTimes(username)
 GET     /group/:id                  controllers.Info.viewGroup(id)
 
 # Feed

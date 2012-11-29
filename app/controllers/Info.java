@@ -358,6 +358,59 @@ public class Info extends Controller {
 		return ok(feed.render(true,suggestedUsers));
 	}
 	
+	//////////////
+	// RaceTime //
+	//////////////
+	
+	public static class RaceTimeEdit {
+		
+		public String title;
+		public int hours;
+		public int min;
+		public int sec;
+		public double distance;
+		public String unit;
+		public long date;
+		
+		public String validate() {
+			if (hours < 0 || min < 0 || sec < 0) {
+				return "Please enter a positive time";
+			}
+			else if (distance < 0) {
+				return "Please enter a positive distance";
+			}
+			else if (!(unit.equals("mi.") || unit.equals("km") ||
+					unit.equals("m"))) {
+				return "Invalid unit selected";
+			}
+			else if (date < 0) {
+				return "Invalid date";
+			}
+			return null;
+		}
+		
+	}
+	
+	public static Result viewRaceTimes(String username) {
+		UserInfo user = UserInfo.findByUsername(username);
+		if (user == null) {
+			//TODO make our own 404 perhaps?
+			return notFound();
+		}
+		//TODO better security
+		List<RaceTime> times = RaceTime.findByUsername(username);
+
+		return ok(viewracetimes.render(user, times, null));
+	}
+	
+	public static Result addRaceTime() {
+		return notFound();
+	}
+	
+	public static Result deleteRaceTime(String id) {
+		return notFound();
+	}
+	
 	///////////////
 	// UserGroup //
 	///////////////

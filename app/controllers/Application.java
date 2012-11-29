@@ -72,7 +72,10 @@ public class Application extends Controller {
         if(loginForm.hasErrors()) {
             return badRequest(login.render(loginForm));
         } else {
-            session("username", loginForm.get().username);
+            String username = loginForm.get().username;
+            session("username", username);
+            //update their last login and login count
+            UserInfo.updateInfoForLoginSuccess(username);
             return redirect(routes.Lists.index());
         }
     }

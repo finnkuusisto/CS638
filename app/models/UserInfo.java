@@ -34,7 +34,12 @@ public class UserInfo extends Model {
     public long joinDate;
     public String url;
     
+    //for suggestions
     public long predicted5k;
+    
+    //for basic statistics
+    public long lastLogin;
+    public long loginCount;
     
     public String passHash;
     public String salt;
@@ -109,6 +114,15 @@ public class UserInfo extends Model {
     
     public static List<UserInfo> findUsers(List<String> usernames) {
     	return find.where().in("username", usernames).findList();
+    }
+    
+    public static void updateInfoForLoginSuccess(String username) {
+    	UserInfo info = UserInfo.findByUsername(username);
+    	if (info != null) {
+    		info.lastLogin = (new Date()).getTime();
+    		info.loginCount++;
+    		info.save();
+    	}
     }
     
     /**
