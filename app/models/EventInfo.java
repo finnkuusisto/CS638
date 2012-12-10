@@ -87,6 +87,11 @@ public class EventInfo extends Model {
     public static List<EventInfo> findByCreator(String username) {
     	return find.where().eq("creatorUsername", username).findList();
     }
+
+
+	public static List<EventInfo> getSuggestedEvents(String username) {
+		return find.all();
+	}
 	
 	
 }

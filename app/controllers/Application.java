@@ -76,7 +76,7 @@ public class Application extends Controller {
 		}
 		//otherwise, tell them to login and give them a general feed
 		flash("info","Sign in, or sign up, to get a personalized feed");
-		return ok(feed.render(false,null));
+		return ok(feed.render(false,null,null));
 	}
 	
 	/////////

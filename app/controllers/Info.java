@@ -378,7 +378,8 @@ public class Info extends Controller {
 	
 	public static Result viewUserFeed(String username) {
 		List<UserInfo> suggestedUsers = UserInfo.getSuggestedUsers(username);
-		return ok(feed.render(true,suggestedUsers));
+		List<EventInfo> suggestedEvents = EventInfo.getSuggestedEvents(username);
+		return ok(feed.render(true,suggestedUsers,suggestedEvents));
 	}
 	
 	//////////////

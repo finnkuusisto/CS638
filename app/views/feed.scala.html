@@ -1,4 +1,4 @@
-@(loggedIn: Boolean, suggestedUsers: List[UserInfo])
+@(loggedIn: Boolean, suggestedUsers: List[UserInfo],suggestedEvents: List[EventInfo])
 
 @main("CS 638 Web Application") {
 
@@ -32,7 +32,10 @@
 
     <div class="span6">
         <div class="row-fluid">
-            <h4>Stuff</h4>
+            <h4>Suggested Events</h4>
+                 @for(event <- suggestedEvents) {
+						 <a href="@routes.Info.viewEvent(event.id)">@event.name</a>    
+                    }
         </div>
         
         <div class="row-fluid">
