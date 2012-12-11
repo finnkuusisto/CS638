@@ -39,7 +39,7 @@
         <hr>
 
         <div class="row-fluid">
-            <form id="submission_form" action="@routes.Info.submitRaceTime()" method="post">
+            <form id="submission_form" action="@routes.Info.submitRaceTime()" method="post" onSubmit="fixDate()">
                 <legend>Add race time</legend>
                 <label></label>
                 <input type="text" placeholder="Title" name="title">
@@ -59,7 +59,7 @@
                 <label></label>
                 <input type="text" id="datepicker" data-date-format="mm/dd/yyyy" placeholder="Date" name="date">
                 <label></label>
-                <button class="btn btn-success" type="submit" onClick="fixDate()">Add</button>
+                <button class="btn btn-success" type="submit">Add</button>
             </form>
         </div>
 
