@@ -9,17 +9,7 @@ following: Integer, followers: Integer, attending: Integer)
             <div class="span12">
                 <h1>
                     @user.fullName
-                    @if(editable) {
-                        <a class="btn pull-right" href="@routes.Info.editUser(user.username)"><i class="icon-pencil"></i> Edit profile</a>
-                        <a class="btn pull-right" href="@routes.Info.viewRaceTimes(user.username)"><i class="icon-pencil"></i> Edit race times</a>
-                    }
-                    @if(followable) {
-                        @if(viewerFollowing) {
-                            <a class="btn btn-danger pull-right" href="@routes.Info.followUser(user.username)"><i class="icon-minus icon-white"></i> Unfollow</a>
-                        } else {
-                            <a class="btn btn-primary pull-right" href="@routes.Info.followUser(user.username)"><i class="icon-plus icon-white"></i> Follow</a>
-                        }
-                    }
+
                 </h1>
             </div>
         </div>

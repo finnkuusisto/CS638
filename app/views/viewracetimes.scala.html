@@ -1,6 +1,24 @@
 @(user: UserInfo, times: List[RaceTime], form: Form[Info.RaceTimeEdit])
 
-@main("CS 638 Web Application") {
+@head = {
+    <script>
+        function fixDate() {
+            var frm = document.forms["submission_form"];
+            var dateparts = frm.elements["date"].value.split("/");
+            var date = new Date();
+            date.setFullYear(dateparts[2]);
+            date.setMonth(dateparts[0] - 1);
+            date.setDate(dateparts[1]);
+            frm.elements["date"].value = date.getTime();
+        }
+    </script>
+}
+
+@bottom = {
+    <script type="text/javascript">$('#datepicker').datepicker();</script>
+}
+
+@main("CS 638 Web Application",bottom,head) {
 
     <div class="container-fluid">
 
@@ -21,7 +39,7 @@
         <hr>
 
         <div class="row-fluid">
-            <form action="@routes.Info.submitRaceTime()" method="post">
+            <form id="submission_form" action="@routes.Info.submitRaceTime()" method="post">
                 <legend>Add race time</legend>
                 <label></label>
                 <input type="text" placeholder="Title" name="title">
@@ -39,9 +57,9 @@
                 :
                 <input class="input-mini" type="text" placeholder="ss" name="sec">
                 <label></label>
-                <input type="text" placeholder="Date" name="date">
+                <input type="text" id="datepicker" data-date-format="mm/dd/yyyy" placeholder="Date" name="date">
                 <label></label>
-                <button class="btn btn-success" type="submit">Add</button>
+                <button class="btn btn-success" type="submit" onClick="fixDate()">Add</button>
             </form>
         </div>
 
