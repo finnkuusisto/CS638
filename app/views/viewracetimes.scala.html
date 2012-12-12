@@ -4,18 +4,28 @@
     <script>
         function fixDate() {
             var frm = document.forms["submission_form"];
-            var dateparts = frm.elements["date"].value.split("/");
+            var dateStr = frm.elements["date"].value;
+            var dateparts = dateStr.split("/");
             var date = new Date();
             date.setFullYear(dateparts[2]);
             date.setMonth(dateparts[0] - 1);
             date.setDate(dateparts[1]);
-            frm.elements["date"].value = date.getTime();
+            var time = date.getTime();
+            if (isNaN(time)) {
+                frm.elements["date"].value = "";
+            }
+            else {
+                frm.elements["date"].value = time;
+            }
         }
     </script>
 }
 
 @bottom = {
-    <script type="text/javascript">$('#datepicker').datepicker();</script>
+    <script>
+        var endDate = new Date();
+        $('#datepicker').datepicker('setEndDate', endDate.toString());
+    </script>
 }
 
 @main("CS 638 Web Application",bottom,head) {

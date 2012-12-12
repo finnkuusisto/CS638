@@ -389,15 +389,33 @@ public class Info extends Controller {
 	public static class RaceTimeEdit {
 		
 		public String title;
-		public int hours = 0;
-		public int min = 0;
-		public int sec = 0;
-		public double distance = 0;
+		public Integer hours;
+		public Integer min;
+		public Integer sec;
+		public Double distance;
 		public String unit;
-		public long date = 0;
+		public Long date;
 		
 		public String validate() {
-			if (hours < 0 || min < 0 || sec < 0) {
+			//handle non-entered fields
+			if (hours == null) {
+				hours = 0;
+			}
+			if (min == null) {
+				min = 0;
+			}
+			if (sec == null) {
+				sec = 0;
+			}
+			if (distance == null) {
+				return "Please enter a distance";
+			}
+			if (date == null) {
+				return "Please enter a date";
+			}
+			//do the validation
+			if (hours < 0 || min < 0 || sec < 0 ||
+					(hours + min + sec) <= 0) {
 				return "Please enter a positive time";
 			}
 			else if (distance < 0) {
@@ -441,9 +459,8 @@ public class Info extends Controller {
     	Form<RaceTimeEdit> form =
     			form(RaceTimeEdit.class).bindFromRequest();
     	if (form.hasErrors()) {
-    		Logger.info(form.toString());
     		flash("error", form.globalError().message());
-    		return Info.viewRaceTimes(username);
+    		return redirect(routes.Info.viewRaceTimes(username));
     	}
     	//otherwise we were successful
     	RaceTimeEdit rt = form.get();
@@ -464,7 +481,7 @@ public class Info extends Controller {
     	RaceTime.create(username, rt.title, PaceUtil.timeToSec(rt.hours, rt.min,
     			rt.sec), km, unit, rt.date);
 		flash("success", "Race time added");
-		return Info.viewRaceTimes(username);
+		return redirect(routes.Info.viewRaceTimes(username));
 	}
 	
 	public static Result deleteRaceTime(String id) {

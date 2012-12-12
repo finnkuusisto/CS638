@@ -8,6 +8,6 @@ function shortDateString(milliseconds) {
     var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
     var date = new Date(milliseconds);
     var str = months[date.getMonth()]
-    str = str.concat(" ", date.getDay(), ", ", date.getFullYear());
+    str = str.concat(" ", date.getDate(), ", ", date.getFullYear());
     return str;
 }
