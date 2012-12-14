@@ -1,8 +1,8 @@
 package controllers;
 
-import controllers.Info.EventInfoEdit;
+import java.util.List;
+
 import models.AchievementInfo;
-import models.Attend;
 import models.EventInfo;
 import models.UserGroup;
 import models.UserInfo;
@@ -59,8 +59,6 @@ public class Application extends Controller {
 		flash("success", "Message Sent");
 		
 		return ok(contact.render());
-			
-		
 	}
 	
 	////////
@@ -76,7 +74,9 @@ public class Application extends Controller {
 		}
 		//otherwise, tell them to login and give them a general feed
 		flash("info","Sign in, or sign up, to get a personalized feed");
-		return ok(feed.render(false,null,null));
+		List<UserInfo> newestUsers = UserInfo.getNewestUsers();
+		List<EventInfo> newestEvents = EventInfo.getNewestEvents();
+		return ok(feed.render(false,null,null,newestUsers,newestEvents));
 	}
 	
 	/////////

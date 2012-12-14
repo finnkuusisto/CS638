@@ -29,7 +29,7 @@ public class PaceUtil {
 		seconds -= (hours * PaceUtil.SEC_PER_HOUR);
 		int minutes = seconds / PaceUtil.SEC_PER_MIN;
 		seconds -= (minutes * PaceUtil.SEC_PER_MIN);
-		String ret = minutes + ":" + seconds;
+		String ret = String.format("%02d:%02d", minutes, seconds);
 		if (hours > 0) {
 			ret = hours + ":" + ret;
 		}

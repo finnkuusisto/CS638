@@ -81,6 +81,10 @@ public class UserInfo extends Model {
         return find.all();
     }
     
+    public static List<UserInfo> findAllOrderBy(String field) {
+        return find.orderBy(field).findList();
+    }
+    
     public static void create(String fullName, String username, String email,
     		String zipCode, String password) {
     	//Date objects are always UTC/GMT
@@ -164,6 +168,16 @@ public class UserInfo extends Model {
     	//now only return the 10 closest other users
     	for (int i = 0; !sorted.isEmpty() && i < 10; i++) {
     		ret.add(sorted.remove().obj);
+    	}
+    	return ret;
+    }
+    
+    public static List<UserInfo> getNewestUsers() {
+    	List<UserInfo> ordered = UserInfo.findAllOrderBy("joinDate");
+    	//need the last 10 or so
+    	List<UserInfo> ret = new ArrayList<UserInfo>();
+    	for (int i = ordered.size() - 1; i >= Math.max(0, ordered.size() - 10); i--) {
+    		ret.add(ordered.get(i));
     	}
     	return ret;
     }

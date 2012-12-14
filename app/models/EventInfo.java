@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -65,6 +66,9 @@ public class EventInfo extends Model {
     	return find.all();
     }
     
+    public static List<EventInfo> findAllOrderBy(String field) {
+        return find.orderBy(field).findList();
+    }
 
     public static EventInfo create(String creatorUsername, String name,
     		String description, double distance, String unit, String routeDescription, String pace) {
@@ -90,8 +94,23 @@ public class EventInfo extends Model {
 
 
 	public static List<EventInfo> getSuggestedEvents(String username) {
-		return find.all();
+		List<EventInfo> events = find.all();
+		//TODO do some magic like check the pace of attendees
+		List<EventInfo> ret = new ArrayList<EventInfo>();
+		for (int i = 0; i < 10 && i < events.size(); i++) {
+			ret.add(events.get(i));
+		}
+		return ret;
 	}
 	
+	public static List<EventInfo> getNewestEvents() {
+		List<EventInfo> ordered = EventInfo.findAllOrderBy("createDate");
+		//need the last 10 or so
+    	List<EventInfo> ret = new ArrayList<EventInfo>();
+    	for (int i = ordered.size() - 1; i >= Math.max(0, ordered.size() - 10); i--) {
+    		ret.add(ordered.get(i));
+    	}
+    	return ret;
+	}
 	
 }

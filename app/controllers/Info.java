@@ -378,8 +378,11 @@ public class Info extends Controller {
 	
 	public static Result viewUserFeed(String username) {
 		List<UserInfo> suggestedUsers = UserInfo.getSuggestedUsers(username);
+		List<UserInfo> newestUsers = UserInfo.getNewestUsers();
 		List<EventInfo> suggestedEvents = EventInfo.getSuggestedEvents(username);
-		return ok(feed.render(true,suggestedUsers,suggestedEvents));
+		List<EventInfo> newestEvents = EventInfo.getNewestEvents();
+		return ok(feed.render(true, suggestedUsers, suggestedEvents,
+				newestUsers, newestEvents));
 	}
 	
 	//////////////
@@ -452,7 +455,8 @@ public class Info extends Controller {
 	public static Result submitRaceTime() {
 		//TODO security
 		String username = session().get("username");
-		if (username == null) {
+    	UserInfo userInfo = UserInfo.findByUsername(username);
+		if (username == null || userInfo == null) {
 			return Application.index();
 		}
 		//bind the form content
@@ -478,8 +482,11 @@ public class Info extends Controller {
     		km = rt.distance / 1000;
     		unit = Unit.meters;
     	}
-    	RaceTime.create(username, rt.title, PaceUtil.timeToSec(rt.hours, rt.min,
-    			rt.sec), km, unit, rt.date);
+    	int time = PaceUtil.timeToSec(rt.hours, rt.min, rt.sec);
+    	RaceTime.create(username, rt.title, time, km, unit, rt.date);
+    	//TODO do a stupid update of 5k prediction for now
+    	userInfo.predicted5k = PaceUtil.runTimeEstimate(km, time, 5);
+    	userInfo.save();
 		flash("success", "Race time added");
 		return redirect(routes.Info.viewRaceTimes(username));
 	}

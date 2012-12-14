@@ -19,7 +19,9 @@ following: Integer, followers: Integer, attending: Integer)
         <div class="row-fluid">
             <div class="span4">
                 
+                @if(editable) { <a href="http://www.gravatar.com/emails/" rel="tooltip" data-placement="bottom" title="Change your profile picture at gravatar.com"> }
                 <img src="@Gravatar.getURL(user.email,280,Gravatar.DFLT_MYSTERY_MAN,Gravatar.RTNG_PG)" class="img-polaroid">
+                @if(editable) { </a> }
                 
                 <hr>
                 

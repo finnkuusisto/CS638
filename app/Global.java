@@ -38,14 +38,12 @@ public class Global extends GlobalSettings {
     					"finn.kuusisto@gmail.com", "53726", 1353463497488L,
     					"finn");
     			finn.about = "I am super-duper awesome.";
-    			finn.predicted5k = PaceUtil.timeToSec(17, 30);
     			finn.save();
     			
     			UserInfo paul = new UserInfo("Paul Bolanowski", "paul",
     					"marathonpaulb@gmail.com", "53706", 1353453497488L,
     					"paul");
     			paul.about = "I am not quite as super-duper awesome as Finn.  Finn is pretty darn cool.";
-    			paul.predicted5k = PaceUtil.timeToSec(17, 30);
     			paul.save();
     			
     			//then a bunch of randoms
