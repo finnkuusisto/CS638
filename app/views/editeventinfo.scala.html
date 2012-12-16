@@ -5,13 +5,6 @@
     <div class="container-fluid" style = "padding:50px; border:1px solid black;">
 	
          <div class="well" style = "margin:10px; border:1px solid black;">
-          
-    	@if(flash.contains("success")) {
-        	<div class="alert alert-success">
-            	<button type="button" class="close" data-dismiss="alert">&times;</button>
-            	@flash.get("success")
-        	</div>
-    	}
 
             <form class="form-horizontal" action="@routes.Info.editEvent(event.id)" method="post">
            	<legend>Edit Event</legend> 
@@ -22,7 +15,7 @@
                 </div>
         	</div>
         
-        	<div class="control-group">
+            <div class="control-group">
        	        	<label class="control-label" for="description">Description</label>
                 	<div class="controls">
                   	<input id="description" value="@form("description").value" type="text" placeholder="Description" name="description">
@@ -54,9 +47,9 @@
                 <label class="control-label" for="inputName">Unit</label>
                 <div class="controls">
               	<select name="unit">
-  					<option value="Miles">Miles</option>
-  					<option value="Kilometers">Kilometers</option>
-  					<option value="Meters">Meters</option>  			
+  					<option>mi.</option>
+  					<option>km</option>
+  					<option>m</option>  			
 				</select> </div>
         	</div>
             	            	     	    	

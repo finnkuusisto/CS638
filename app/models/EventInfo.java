@@ -6,14 +6,13 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import play.db.ebean.Model;
 
 
 import com.avaje.ebean.*;
 
+import extra.PaceUtil;
 import extra.Unit;
 
 
@@ -28,8 +27,8 @@ public class EventInfo extends Model {
 	public String creatorUsername;
 	public String name;
 	public String description;
-	public double distance;
-	public Unit unit;
+	public double km;
+	public Unit displayUnit;
 	public String pace;
 	public String routeDescription;
 	
@@ -39,17 +38,32 @@ public class EventInfo extends Model {
 		this.creatorUsername = creatorUsername;
 		this.name = name;
 		this.description = description;
-		this.distance = distance;
 		this.routeDescription = routeDescription;
 		this.pace = pace;
-		if(unit.equals("Miles")){
-			this.unit = Unit.miles;
-		} else if(unit.equals("Meters")){
-			this.unit = Unit.meters;
-		} else if(unit.equals("Kilometers")) {
-			this.unit = Unit.kilometers;		
+		if(unit.equals("mi.")){
+			this.displayUnit = Unit.miles;
+			this.km = PaceUtil.mileToKm(distance);
+		} else if(unit.equals("m")){
+			this.displayUnit = Unit.meters;
+			this.km = distance / 1000;
+		} else if(unit.equals("km")) {
+			this.displayUnit = Unit.kilometers;	
+			this.km = distance;
 		}
 		this.createDate = createDate;
+	}
+	
+	public String getDistanceString() {
+		String ret = null;
+		switch (this.displayUnit) {
+			case miles:
+				ret = PaceUtil.kmToMile(this.km) + " mi.";
+			case meters:
+				ret = (this.km / 1000) + " m";
+			case kilometers:
+				ret = this.km + " km";
+		}
+		return ret;
 	}
 	
 	///////////
@@ -75,7 +89,7 @@ public class EventInfo extends Model {
     	//Date objects are always UTC/GMT
     	Date now = new Date();
     	EventInfo group = new EventInfo(creatorUsername, name, description,
-    			distance,unit, routeDescription, pace, now.getTime());
+    			distance, unit, routeDescription, pace, now.getTime());
     	group.save();
     	return group;
     }
@@ -111,6 +125,18 @@ public class EventInfo extends Model {
     		ret.add(ordered.get(i));
     	}
     	return ret;
+	}
+	
+	public static List<EventInfo> getFolloweesEvents(String follower) {
+		List<String> users = Follow.findUsersFollowedBy(follower);
+		List<String> eventIDs =
+				new ArrayList<String>(Attend.findEventsAttendedBy(users));
+		List<EventInfo> events = EventInfo.findEvents(eventIDs);
+		//reduce size
+		while (events.size() > 10) {
+			events.remove(events.size() - 1);
+		}
+		return events;
 	}
 	
 }

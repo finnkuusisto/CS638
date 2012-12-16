@@ -21,7 +21,7 @@ public class Application extends Controller {
 			"[a-zA-Z0-9.!#$%&'*+-/=?_`{}~|^]+@[a-zA-Z0-9.-]+\\.[A-Za-z]+";
 	
 	public static Result index() {
-		return redirect(routes.Lists.index());
+		return redirect(routes.Application.viewFeed());
 	}
 	
 	public static Result about() {
@@ -44,8 +44,6 @@ public class Application extends Controller {
 	    	}
 	    	
 	}
-	
-	
 	
 	public static Result submitMessage(){
 	
@@ -76,7 +74,7 @@ public class Application extends Controller {
 		flash("info","Sign in, or sign up, to get a personalized feed");
 		List<UserInfo> newestUsers = UserInfo.getNewestUsers();
 		List<EventInfo> newestEvents = EventInfo.getNewestEvents();
-		return ok(feed.render(false,null,null,newestUsers,newestEvents));
+		return ok(feed.render(false,null,null,null,newestUsers,newestEvents));
 	}
 	
 	/////////
@@ -113,7 +111,7 @@ public class Application extends Controller {
             session("username", username);
             //update their last login and login count
             UserInfo.updateInfoForLoginSuccess(username);
-            return redirect(routes.Lists.index());
+            return redirect(routes.Application.index());
         }
     }
     

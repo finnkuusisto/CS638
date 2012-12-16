@@ -1,7 +1,9 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -58,6 +60,15 @@ public class Attend extends Model {
 		List<String> ret = new ArrayList<String>(events.size());
 		for (Attend a : events) {
 			ret.add(a.eventID);
+		}
+		return ret;
+	}
+	
+	public static Set<String> findEventsAttendedBy(List<String> usernames) {
+		Set<String> ret = new HashSet<String>();
+		for (String username : usernames) {
+			List<String> events = Attend.findEventsAttendedBy(username);
+			ret.addAll(events);
 		}
 		return ret;
 	}

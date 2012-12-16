@@ -36,11 +36,11 @@ create table event_info (
   creator_username          varchar(255),
   name                      varchar(255),
   description               varchar(255),
-  distance                  double,
-  unit                      integer,
+  km                        double,
+  display_unit              integer,
   pace                      varchar(255),
   route_description         varchar(255),
-  constraint ck_event_info_unit check (unit in (0,1,2)),
+  constraint ck_event_info_display_unit check (display_unit in (0,1,2)),
   constraint pk_event_info primary key (id))
 ;
 

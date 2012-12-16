@@ -2,20 +2,6 @@
 
 @main("CS 638 Web Application") {
 
-    @if(form.hasGlobalErrors) {
-        <div class="alert alert-error">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            @form.globalError.message
-        </div>
-    }
-
-    @if(flash.contains("success")) {
-        <div class="alert alert-success">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            @flash.get("success")
-        </div>
-    }
-
     <div class="container-fluid">
     
         <legend>Edit profile</legend>

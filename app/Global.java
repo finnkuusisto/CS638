@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.Set;
 
 import models.AchievementInfo;
+import models.Attend;
+import models.EventInfo;
 import models.UserInfo;
 import models.ZipCodeInfo;
 
@@ -58,6 +60,9 @@ public class Global extends GlobalSettings {
                 		AchievementInfo.create(user.username);
                 	}
                 }
+                
+                //create random events
+                genRandomEvent(20);
 
     		}
     	}
@@ -100,6 +105,33 @@ public class Global extends GlobalSettings {
 		    info.predicted5k = PaceUtil.timeToSec(min5k, sec5k);
 		    return info;
     	}
+    	
+    	static String[] eventNames = "Easy Run,Long Run,Short Run,Intervals,Hill Workout,Mile Repeats,Threshold,Fartlek,Pace Work,Friendly Race".split(",");
+    	static double[] distances = {4, 5, 8, 10, 15};
+    	public static void genRandomEvent(int num) {
+    		List<UserInfo> users = UserInfo.findAll();
+    		for (int i = 0; i < num; i++) {
+    			//make the event
+    			UserInfo user = users.get((int)(Math.random() * users.size()));
+    			String username = user.username;
+    			String name = user.fullName + "'s " + 
+    					eventNames[(int)(Math.random() * eventNames.length)];
+    			double distance =
+    					distances[(int)(Math.random() * distances.length)];
+    			String unit = "km";
+    			EventInfo event = EventInfo.create(username, name, "", distance,
+    					unit, "", "");
+    			//now get some folks attending
+    			Attend.create(username, event.id);
+    			int numAttendees = (int)(Math.random() * 5);
+    			for (int j = 0; j < numAttendees; j++) {
+    				UserInfo attender =
+    						users.get((int)(Math.random() * users.size()));
+    				Attend.create(attender.username, event.id);
+    			}
+    		}
+    	}
+    	
     }
     
 }

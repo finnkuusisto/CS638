@@ -1,5 +1,5 @@
 @(loggedIn: Boolean, suggestedUsers: List[UserInfo],suggestedEvents: List[EventInfo],
-newestUsers: List[UserInfo], newestEvents: List[EventInfo])
+followeesEvents: List[EventInfo], newestUsers: List[UserInfo], newestEvents: List[EventInfo])
 
 @main("CS 638 Web Application") {
 
@@ -7,7 +7,7 @@ newestUsers: List[UserInfo], newestEvents: List[EventInfo])
 
     @if(loggedIn){
     <div class="row-fluid">
-        <div class="span6">
+        <div class="span4">
             <h4>Suggested Users</h4>
                 <table class="table table-condensed table-hover">
                     <tbody>
@@ -26,7 +26,7 @@ newestUsers: List[UserInfo], newestEvents: List[EventInfo])
                     </tbody>
                 </table>
         </div>
-        <div class="span6">
+        <div class="span4">
             <h4>Suggested Events</h4>
                 <table class="table table-condensed table-hover">
                     <tbody>
@@ -36,7 +36,24 @@ newestUsers: List[UserInfo], newestEvents: List[EventInfo])
                                 <a href="@routes.Info.viewEvent(event.id)">@event.name</a>
                             </td>
                             <td>
-                                <a href="@routes.Info.viewEvent(event.id)">@event.distance @event.unit</a>
+                                <a href="@routes.Info.viewEvent(event.id)">@event.getDistanceString()</a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+        </div>
+        <div class="span4">
+            <h4>Followees Events</h4>
+                <table class="table table-condensed table-hover">
+                    <tbody>
+                    @for(event <- followeesEvents) {
+                        <tr>
+                            <td>
+                                <a href="@routes.Info.viewEvent(event.id)">@event.name</a>
+                            </td>
+                            <td>
+                                <a href="@routes.Info.viewEvent(event.id)">@event.getDistanceString()</a>
                             </td>
                         </tr>
                     }
@@ -77,7 +94,7 @@ newestUsers: List[UserInfo], newestEvents: List[EventInfo])
                                 <a href="@routes.Info.viewEvent(event.id)">@event.name</a>
                             </td>
                             <td>
-                                <a href="@routes.Info.viewEvent(event.id)">@event.distance @event.unit</a>
+                                <a href="@routes.Info.viewEvent(event.id)">@event.getDistanceString()</a>
                             </td>
                         </tr>
                     }

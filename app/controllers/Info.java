@@ -94,8 +94,6 @@ public class Info extends Controller {
 			if (event == null || comment == null) {
 				//TODO make our own 404 perhaps?
 				return notFound();
-			
-				
 			}
 			String username = session().get("username");
 			if(username.equals(comment.username)){
@@ -124,13 +122,16 @@ public class Info extends Controller {
 	    	EventInfoEdit eventEdit = eventEditForm.get();
 			event.name = eventEdit.name;
 			event.description = eventEdit.description;
-			if(eventEdit.unit.equals("Miles")){
-				event.unit = Unit.miles;
-			} else if(eventEdit.unit.equals("Meters")){
-				event.unit = Unit.meters;
-			} else if(eventEdit.unit.equals("Kilometers")) {
-				event.unit = Unit.kilometers;		
-			}	
+			if(eventEdit.unit.equals("mi.")){
+				event.displayUnit = Unit.miles;
+				event.km = PaceUtil.mileToKm(eventEdit.distance);
+			} else if(eventEdit.unit.equals("m")){
+				event.displayUnit = Unit.meters;
+				event.km = eventEdit.distance / 1000;
+			} else if(eventEdit.unit.equals("km")) {
+				event.displayUnit = Unit.kilometers;	
+				event.km = eventEdit.distance;
+			}
 			event.save();
 			flash("success", "Changes saved");
 			return redirect(routes.Info.viewEvent(id));
@@ -189,8 +190,8 @@ public class Info extends Controller {
 			public EventInfoEdit(EventInfo info) {
 				this.name = info.name;
 				this.description = info.description;
-				this.distance = info.distance;
-				this.unit = info.unit.toString();
+				this.distance = info.km;
+				this.unit = info.displayUnit.toString();
 				this.routeDescription = info.routeDescription;
 				this.pace = info.pace;
 						
@@ -204,10 +205,8 @@ public class Info extends Controller {
 					meters = "checked";
 				}
 				
-				
-				
-				
 			}
+			
 			public String validate() {
 				//TODO validate
 	    		return null;
@@ -381,8 +380,9 @@ public class Info extends Controller {
 		List<UserInfo> newestUsers = UserInfo.getNewestUsers();
 		List<EventInfo> suggestedEvents = EventInfo.getSuggestedEvents(username);
 		List<EventInfo> newestEvents = EventInfo.getNewestEvents();
+		List<EventInfo> followeesEvents = EventInfo.getFolloweesEvents(username);
 		return ok(feed.render(true, suggestedUsers, suggestedEvents,
-				newestUsers, newestEvents));
+				followeesEvents, newestUsers, newestEvents));
 	}
 	
 	//////////////
