@@ -119,8 +119,9 @@ public class Global extends GlobalSettings {
     			double distance =
     					distances[(int)(Math.random() * distances.length)];
     			String unit = "km";
+			String description = "We'll start at the terrace, go out to picnic point, run behind Eagle Heights, head back down Johnson to Park, and finish at the terrace.";
     			EventInfo event = EventInfo.create(username, name, "", distance,
-    					unit, "", "");
+    					unit, description, "");
     			//now get some folks attending
     			Attend.create(username, event.id);
     			int numAttendees = (int)(Math.random() * 5);
