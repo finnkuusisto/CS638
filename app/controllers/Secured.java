@@ -10,7 +10,11 @@ public class Secured extends Security.Authenticator {
     
     @Override
     public String getUsername(Context ctx) {
-        return ctx.session().get("username");
+    	UserInfo loggedIn = SessionInfo.getLoggedInUser(ctx.session());
+    	if (loggedIn == null) {
+    		return null;
+    	}
+    	return loggedIn.username;
     }
     
     @Override

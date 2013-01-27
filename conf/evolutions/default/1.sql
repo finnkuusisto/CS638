@@ -63,6 +63,13 @@ create table race_time (
   constraint pk_race_time primary key (id))
 ;
 
+create table session_info (
+  username                  varchar(255) not null,
+  key                       varchar(255),
+  create_time               bigint,
+  constraint pk_session_info primary key (username))
+;
+
 create table user_group (
   id                        varchar(255) not null,
   creator_username          varchar(255),
@@ -110,6 +117,8 @@ create sequence follow_seq;
 
 create sequence race_time_seq;
 
+create sequence session_info_seq;
+
 create sequence user_group_seq;
 
 create sequence user_info_seq;
@@ -135,6 +144,8 @@ drop table if exists follow;
 
 drop table if exists race_time;
 
+drop table if exists session_info;
+
 drop table if exists user_group;
 
 drop table if exists user_info;
@@ -154,6 +165,8 @@ drop sequence if exists event_info_seq;
 drop sequence if exists follow_seq;
 
 drop sequence if exists race_time_seq;
+
+drop sequence if exists session_info_seq;
 
 drop sequence if exists user_group_seq;
 

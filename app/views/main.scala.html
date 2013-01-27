@@ -54,37 +54,45 @@
                             <li><a href="@routes.Application.about()">About</a></li>
                             <li><a href="@routes.Application.contact()">Contact</a></li>
                             <li class="divider-vertical"></li>
-                            @if(session.contains("username")) {
-                                <li><a href="@routes.Info.viewUser(session.get("username"))">Profile</a></li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        <i class="icon-cog"></i> <b class="caret"></b>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Settings</a></li>
-                                        <li><a href="@routes.Application.logout()">Sign out (@session.get("username"))</a></li>
-                                    </ul>
-                                </li>
-                            } else {
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                        Sign in <b class="caret"></b>
-                                    </a>
-                                    <div class="dropdown-menu" style="padding-left:10px; padding-right:10px; padding-bottom:0px;">
-                                        <form action="@routes.Application.authenticate()" method="post">
-                                            <label></label>
-                                            <input type="text" placeholder="Username" name="username">
-                                            <label></label>
-                                            <input type="password" placeholder="Password" name="password">
-                                            <label></label>
-                                            <button class="btn btn-primary" type="submit">Sign in</button>
-                                            <div class="divider"></div>
-                                            <a class="btn btn-warning" href="@routes.Application.newAccount()">New user?  Sign up for free.</a>
-                                        </form>
-                                    </div>
-                                </li>
-                          
-                            }
+							@defining(SessionInfo.getLoggedInUser(Http.Context.current().session())) { loggedIn =>
+								@if(loggedIn!=null) {
+									<li>
+										<a href="@routes.Info.viewUser(loggedIn.username)">
+											<!--<img src="@Gravatar.getURL(loggedIn.email,15,Gravatar.DFLT_MYSTERY_MAN,Gravatar.RTNG_PG)">-->
+											@loggedIn.fullName
+										</a>
+									</li>
+									<li class="dropdown">
+										<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+											<i class="icon-cog"></i> <b class="caret"></b>
+										</a>
+										<ul class="dropdown-menu">
+											<li><a href="#">Settings</a></li>
+											<li><a href="@routes.Application.logout()">Sign out</a></li>
+										</ul>
+									</li>
+								} else {
+									<li class="dropdown">
+										<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+											Sign in <b class="caret"></b>
+										</a>
+										<div class="dropdown-menu" style="padding-left:10px; padding-right:10px; padding-bottom:0px;">
+											<form action="@routes.Application.authenticate()" method="post">
+												<label></label>
+												<input type="text" placeholder="Username" name="username">
+												<label></label>
+												<input type="password" placeholder="Password" name="password">
+												<label></label>
+												<button class="btn btn-primary" type="submit">Sign in</button>
+												<div class="divider"></div>
+												<a class="btn btn-warning" href="@routes.Application.newAccount()">New user?  Sign up for free.</a>
+											</form>
+										</div>
+									</li>
+							  
+								}
+							}
+							<li class="divider-vertical"></li>
                             <li><a href="#nextEvent">Next Event on Friday</a></li>
                             
                         </ul>

@@ -1,17 +1,10 @@
-@(event: EventInfo, editable: Boolean, viewerAttending: Boolean, attending: List[UserInfo])
+@(form: Form[Info.CommentSubmit], event: EventInfo, viewerUsername: String, editable: Boolean, viewerAttending: Boolean, attending: List[UserInfo], comments: List[Comment])
 
 @main("CS 638 Web Application") {
 
     <div class="container-fluid" style = "padding:50px; border:1px solid black;">
 	
          <div class="well" style = "margin:10px; border:1px solid black;">
-           
-    	@if(flash.contains("success")) {
-        	<div class="alert alert-success">
-            	<button type="button" class="close" data-dismiss="alert">&times;</button>
-            	@flash.get("success")
-        	</div>
-        	}
        
             <h1> @event.name
             	@if(editable) {
@@ -25,25 +18,61 @@
        			 
        			 }
        	    </h1>
-      
+         <div class="row-fluid">
+            <div class="span4">
      	    	<p><a href="@routes.Info.viewUser(event.creatorUsername)">@event.creatorUsername</a></p>
-            	<p>@event.distance @event.unit</p>
-            	<p>@event.pace</p>
+            	<p>Distance: @event.getDistanceString()</p>
+            	<p>Pace: @event.pace</p>
             	<p>@event.description</p>
-            	<p>@event.routeDescription</p>
-            	     
+            	
               	<legend>@attending.size() Attending</legend>
-                <div class="well well-small">
-                	@for(user <- attending) {
-                    	    <p class="lead" style="height:10px"><a href="@routes.Info.viewUser(user.username)">@user.fullName</a></p>
-                	}
+                	<div class="well well-small">
+                		@for(user <- attending) {
+                    	    	<p class="lead" style="height:10px"><a href="@routes.Info.viewUser(user.username)">@user.fullName</a></p>
+                		}
+                	</div>
+                
+           </div>
+           	<div class="span8">
+                <legend>Route</legend>
+              	<p>	@event.routeDescription </p>
+            </div>
+            
+          <legend>@comments.size() Comments</legend>
+                	<div class="well well-small">
+                		@for(comment <- comments) {
+                    	    	
+                    	    	<div class="well well-small">
+                    	    			<p class="lead" style="height:10px"><a href="@routes.Info.viewUser(comment.username)">@comment.username</a></p>
+                				    	<p> @comment.comment</p>
+                				    	@if(viewerUsername.equals(comment.username)) {
+               				    	    	<form class="form-vertical" action="@routes.Info.deleteComment(event.id,comment.id)" method="post">
+                				    			<button class="btn btn-danger pull-right" type="submit"><i class="icon-minus icon-white"></i> Delete</a>
+                        					</form>
+                        				}
+                					
+                				</div>
+                    	}
+                	</div>
+             <form class="form-vertical" action="@routes.Info.submitComment(event.id)" method="post">
+      
+            <div class="control-group">
+                <label class="control-label" for="comment">New Comment</label>
+                <div class="controls">
+                    <textarea class="input-xlarge" rows="3" id="comment" placeholder="Comment" name="comment"></textarea>
                 </div>
-          
-
-         	
-         
+            </div>
+            
+            <div class="control-group">
+                <div class="controls">
+                    <button class="btn btn-success" type="submit">Comment</button>
+               </div>
+            </div>
+            
+			</form>
+         </div>     
      
-        </div>
+       </div>
 	
     </div>
     

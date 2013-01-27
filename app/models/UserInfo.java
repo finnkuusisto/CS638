@@ -113,6 +113,9 @@ public class UserInfo extends Model {
      * Retrieve a User from username.
      */
     public static UserInfo findByUsername(String username) {
+    	if (username == null) {
+    		return null;
+    	}
         return find.where().eq("username", username).findUnique();
     }
     

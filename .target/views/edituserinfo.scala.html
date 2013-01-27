@@ -2,20 +2,6 @@
 
 @main("CS 638 Web Application") {
 
-    @if(form.hasGlobalErrors) {
-        <div class="alert alert-error">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            @form.globalError.message
-        </div>
-    }
-
-    @if(flash.contains("success")) {
-        <div class="alert alert-success">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            @flash.get("success")
-        </div>
-    }
-
     <div class="container-fluid">
     
         <legend>Edit profile</legend>
@@ -47,6 +33,13 @@
                 <label class="control-label" for="inputAbout">About</label>
                 <div class="controls">
                     <textarea class="input-xlarge" rows="3" id="inputAbout" placeholder="About" name="about">@form("about").value</textarea>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label class="control-label" for="inputPublicEmail">Public email</label>
+                <div class="controls">
+                    <input type="checkbox" id="inputPublicEmail" name="publicEmail" @if(form("publicEmail").value.equals("true")){checked}></input>
                 </div>
             </div>
         

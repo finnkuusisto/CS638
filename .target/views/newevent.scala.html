@@ -11,13 +11,6 @@
         </div>
     }
 
-    @if(flash.contains("success")) {
-        <div class="alert alert-success">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            @flash.get("success")
-        </div>
-    }
-
     <form class="form-horizontal" action="@routes.Application.createEvent()" method="post">
         <legend>Create new event</legend> 
         <div class="control-group">
@@ -49,19 +42,17 @@
         </div>
         
         <div class="control-group">
-                <label class="control-label" for="distance">Distance</label>
-                <div class="controls">
-                      <input type="text" id="distance" placeholder="Distance" name="distance">
-                </div>
+            <label class="control-label" for="distance">Distance</label>
+            <div class="controls">
+                <input type="text" id="distance" placeholder="Distance" name="distance">
+                <select class="input-mini" name="unit">
+                    <option>mi.</option>
+                    <option>km</option>
+                    <option>m</option>
+                </select>
+            </div>
         </div>
-        
-      <label></label>
-		<select name="unit">
-  			<option value="Miles">Miles</option>
-  			<option value="Kilometers">Kilometers</option>
-  			<option value="Meters">Meters</option>  			
-		</select>
-		
+
         <button class="btn btn-primary" type="submit">Create</button>
         <a class="btn" href="@routes.Application.index()">Cancel</a>
     </form>

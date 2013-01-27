@@ -9,16 +9,7 @@ following: Integer, followers: Integer, attending: Integer)
             <div class="span12">
                 <h1>
                     @user.fullName
-                    @if(editable) {
-                        <a class="btn pull-right" href="@routes.Info.editUser(user.username)"><i class="icon-pencil"></i> Edit profile</a>
-                    }
-                    @if(followable) {
-                        @if(viewerFollowing) {
-                            <a class="btn btn-danger pull-right" href="@routes.Info.followUser(user.username)"><i class="icon-minus icon-white"></i> Unfollow</a>
-                        } else {
-                            <a class="btn btn-primary pull-right" href="@routes.Info.followUser(user.username)"><i class="icon-plus icon-white"></i> Follow</a>
-                        }
-                    }
+
                 </h1>
             </div>
         </div>
@@ -28,7 +19,9 @@ following: Integer, followers: Integer, attending: Integer)
         <div class="row-fluid">
             <div class="span4">
                 
-                <img src="@Gravatar.getURL(user.email,280,Gravatar.DFLT_MYSTERY_MAN)" class="img-polaroid">
+                @if(editable) { <a href="http://www.gravatar.com/emails/" rel="tooltip" data-placement="bottom" title="Change your profile picture at gravatar.com"> }
+                <img src="@Gravatar.getURL(user.email,280,Gravatar.DFLT_MYSTERY_MAN,Gravatar.RTNG_PG)" class="img-polaroid">
+                @if(editable) { </a> }
                 
                 <hr>
                 
@@ -63,6 +56,20 @@ following: Integer, followers: Integer, attending: Integer)
                 </div>
                 
                 <hr>
+                
+                <div class="row-fluid">
+                    @if(editable) {
+                        <a class="btn" href="@routes.Info.editUser(user.username)"><i class="icon-pencil"></i> Edit profile</a>
+                        <a class="btn" href="@routes.Info.viewRaceTimes(user.username)"><i class="icon-pencil"></i> Edit race times</a>
+                    }
+                    @if(followable) {
+                        @if(viewerFollowing) {
+                            <a class="btn btn-danger" href="@routes.Info.followUser(user.username)"><i class="icon-minus icon-white"></i> Unfollow</a>
+                        } else {
+                            <a class="btn btn-primary" href="@routes.Info.followUser(user.username)"><i class="icon-plus icon-white"></i> Follow</a>
+                        }
+                    }
+                </div>
                 
             </div>
             <div class="span8">
