@@ -1,0 +1,42 @@
+@(user: UserInfo, editable: Boolean, attending: List[EventInfo])
+
+@main("CS 638 Web Application") {
+
+    <div class="container-fluid">
+    
+        <div class="row-fluid">
+        <a href="@routes.Info.viewUser(user.username)">
+            <div class="span1">
+                <img src="@Gravatar.getURL(user.email,70,Gravatar.DFLT_MYSTERY_MAN,Gravatar.RTNG_PG)" class="img-polaroid">
+            </div>
+            <div class="span11">
+                <h1>
+                    @user.fullName
+                </h1>
+            </div>
+        </a>
+        </div>
+        
+        <hr>
+
+        <div class="row-fluid">
+            <div class="span6">
+                <h4>Attending</h4>
+                <table class="table table-condensed table-hover">
+                    <tbody>
+                    @for(event <- attending) {
+                        <tr>
+                            <td>
+                                <a href="@routes.Info.viewEvent(event.id)">@event.name</a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+    
+}

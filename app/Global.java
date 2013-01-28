@@ -65,6 +65,11 @@ public class Global extends GlobalSettings {
                 genRandomEvent(20);
 
     		}
+    		Map<String,List<Object>> all = 
+				(Map<String,List<Object>>)Yaml.load("LakeFrontDataOut.yml");
+		
+    		
+    		
     	}
     	
     	//to generate random unique users

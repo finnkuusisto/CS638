@@ -1,0 +1,109 @@
+@(user: UserInfo, times: List[RaceTime], form: Form[Info.RaceTimeEdit])
+
+@head = {
+    <script>
+        function fixDate() {
+            var frm = document.forms["submission_form"];
+            var dateStr = frm.elements["date"].value;
+            var dateparts = dateStr.split("/");
+            var date = new Date();
+            date.setFullYear(dateparts[2]);
+            date.setMonth(dateparts[0] - 1);
+            date.setDate(dateparts[1]);
+            var time = date.getTime();
+            if (isNaN(time)) {
+                frm.elements["date"].value = "";
+            }
+            else {
+                frm.elements["date"].value = time;
+            }
+        }
+    </script>
+}
+
+@bottom = {
+    <script>
+        var endDate = new Date();
+        $('#datepicker').datepicker('setEndDate', endDate.toString());
+    </script>
+}
+
+@main("CS 638 Web Application",bottom,head) {
+
+    <div class="container-fluid">
+
+        <div class="row-fluid">
+        <a href="@routes.Info.viewUser(user.username)">
+            <div class="span1">
+                <img src="@Gravatar.getURL(user.email,70,Gravatar.DFLT_MYSTERY_MAN,Gravatar.RTNG_PG)" class="img-polaroid">
+            </div>
+            <div class="span11">
+                <h1>
+                    @user.fullName
+                </h1>
+            </div>
+        </a>
+
+        </div>
+
+        <hr>
+
+        <div class="row-fluid">
+            <form id="submission_form" action="@routes.Info.submitRaceTime()" method="post" onSubmit="fixDate()">
+                <legend>Add race time</legend>
+                <label></label>
+                <input type="text" placeholder="Title" name="title">
+                <label></label>
+                <input class="input-small" type="text" placeholder="Distance" name="distance">
+                <select class="input-mini" name="unit">
+                    <option>km</option>
+                    <option>mi.</option>
+                    <option>m</option>
+                </select>
+                <label></label>
+                <input class="input-mini" type="text" placeholder="hh" name="hours">
+                :
+                <input class="input-mini" type="text" placeholder="mm" name="min">
+                :
+                <input class="input-mini" type="text" placeholder="ss" name="sec">
+                <label></label>
+                <input type="text" id="datepicker" data-date-format="mm/dd/yyyy" placeholder="Date" name="date">
+                <label></label>
+                <button class="btn btn-success" type="submit">Add</button>
+            </form>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span6">
+                <h4>Race Times</h4>
+                <table class="table table-condensed table-hover">
+                    <tbody>
+                    @for(time <- times) {
+                        <tr>
+                            <td>
+                                @time.title
+                            </td>
+                            <td>
+                                @time.getDistanceString()
+                            </td>
+                            <td>
+                                @time.getTimeString()
+                            </td>
+                            <td id="race-date-@time.id">
+                                Sometime
+                            </td>
+                            <!-- script for local time zone race date -->
+                            <script>
+                                document.getElementById("race-date-@time.id").innerHTML=shortDateString(@time.date);
+                            </script>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+
+}
