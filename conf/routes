@@ -49,7 +49,7 @@ GET     /user/:username/followers   controllers.Info.viewUserFollowInfo(username
 GET     /user/:username/attending   controllers.Info.viewUserAttendInfo(username)
 GET     /user/:username/racetimes   controllers.Info.viewRaceTimes(username)
 GET     /group/:id                  controllers.Info.viewGroup(id)
-
+POST    /user/:username/racetimes   controllers.Info.addRaceTime(username,id)
 
 # Feed
 GET     /feed                       controllers.Application.viewFeed()

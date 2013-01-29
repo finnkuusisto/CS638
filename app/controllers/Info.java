@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import controllers.Application.Event;
@@ -476,7 +477,15 @@ public class Info extends Controller {
 		}
 		List<RaceTime> times = RaceTime.findByUsername(username);
 		Form<RaceTimeEdit> form = form(RaceTimeEdit.class);
-		return ok(viewracetimes.render(user, times, form));
+		String[] name = user.fullName.split("\\s+");
+		List<RaceResultInfo> pastTimes = RaceResultInfo.findByName(name[0], name[1]);
+		/*List<RaceTime> potentialTimes = new ArrayList<RaceTime>();
+		for(int i = 0; i < pastTimes.size(); i++){
+			RaceResultInfo result = pastTimes.get(i);
+			RaceTime time = new RaceTime(username, result.raceName, (int)result.seconds, 5000, Unit.miles, 354135132);
+			potentialTimes.add(time);
+		}*/
+		return ok(viewracetimes.render(user, times, form,pastTimes));
 	}
 
 	public static Result submitRaceTime() {
@@ -515,7 +524,21 @@ public class Info extends Controller {
 		userInfo.predicted5k = PaceUtil.runTimeEstimate(km, time, 5);
 		userInfo.save();
 		flash("success", "Race time added");
+		
 		return redirect(routes.Info.viewRaceTimes(username));
+	}
+	
+	public static Result addRaceTime(String username, String id){
+		
+		RaceResultInfo info = RaceResultInfo.findById(id);
+		if(info != null){
+			RaceTime.create(username, info.raceName, (int) info.seconds, info.km, info.displayUnit, info.date);
+			flash("success", "Race time added");
+			Logger.info("Add Race Time");
+			RaceResultInfo.deleteResult(id);
+		}
+		return redirect(routes.Info.viewRaceTimes(username));
+		
 	}
 
 	public static Result deleteRaceTime(String id) {

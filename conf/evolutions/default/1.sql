@@ -51,6 +51,19 @@ create table follow (
   constraint pk_follow primary key (id))
 ;
 
+create table race_result_info (
+  id                        varchar(255) not null,
+  race_name                 varchar(255),
+  first_name                varchar(255),
+  last_name                 varchar(255),
+  seconds                   double,
+  display_unit              integer,
+  km                        double,
+  date                      bigint,
+  constraint ck_race_result_info_display_unit check (display_unit in (0,1,2)),
+  constraint pk_race_result_info primary key (id))
+;
+
 create table race_time (
   id                        varchar(255) not null,
   username                  varchar(255),
@@ -115,6 +128,8 @@ create sequence event_info_seq;
 
 create sequence follow_seq;
 
+create sequence race_result_info_seq;
+
 create sequence race_time_seq;
 
 create sequence session_info_seq;
@@ -142,6 +157,8 @@ drop table if exists event_info;
 
 drop table if exists follow;
 
+drop table if exists race_result_info;
+
 drop table if exists race_time;
 
 drop table if exists session_info;
@@ -163,6 +180,8 @@ drop sequence if exists comment_seq;
 drop sequence if exists event_info_seq;
 
 drop sequence if exists follow_seq;
+
+drop sequence if exists race_result_info_seq;
 
 drop sequence if exists race_time_seq;
 

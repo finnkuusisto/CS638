@@ -25,6 +25,7 @@ public class RaceTime extends Model {
 	
 	public RaceTime(String username, String title, int time, double km,
 			Unit displayUnit, long date) {
+
 		this.username = username;
 		this.title = title;
 		this.time = time;
