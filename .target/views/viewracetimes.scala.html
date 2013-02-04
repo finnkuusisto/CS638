@@ -1,4 +1,4 @@
-@(user: UserInfo, times: List[RaceTime], form: Form[Info.RaceTimeEdit])
+@(user: UserInfo, times: List[RaceTime], form: Form[Info.RaceTimeEdit], pastTimes: List[RaceResultInfo])
 
 @head = {
     <script>
@@ -75,6 +75,48 @@
 
         <div class="row-fluid">
             <div class="span6">
+                <h4>Suggested Times</h4>
+                <table class="table table-condensed table-hover">
+                    <tbody>
+                    @for(time <- pastTimes) {
+                        <tr>
+                            <td>
+                                @time.raceName
+                            </td>
+                            <td>
+                                @time.firstName
+                            </td>
+                            <td>
+                                @time.lastName
+                            </td>
+                            <td>
+                                @time.getDistanceString()
+                            </td>
+                            <td>
+                                @time.getTimeString()
+                            </td>
+                            <td>     
+                            	<form class="form-vertical" action="@routes.Info.addRaceTime(user.username,time.id)" method="post">
+                				    <button class="btn btn-primary" type="submit"><i class="icon-plus icon-blue"></i> Add</a>
+                        		</form>
+                            </td>
+                       
+                            
+                            <!-- script for local time zone race date -->
+                            <script>
+                                document.getElementById("race-date-@time.id").innerHTML=shortDateString(@time.date);
+                            </script>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+   
+
+
+        <div class="row-fluid">
+            <div class="span6">
                 <h4>Race Times</h4>
                 <table class="table table-condensed table-hover">
                     <tbody>
@@ -102,6 +144,8 @@
                 </table>
             </div>
         </div>
+        
+   
 
 
     </div>

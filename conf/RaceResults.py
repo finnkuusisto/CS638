@@ -11,26 +11,28 @@ import unittest
 """
 class RunningData():
 	
-	"""url = "http://onlineraceresults.com/race/view_race.php?race_id=16514&relist_record_type=result&lower_bound=0&upper_bound=1904&use_previous_sql=1&group_by=default#racetop"
-	
-	file = urllib.urlopen(url)
-	print file.read()
-	"""
+
 	
 	if(len(sys.argv) == 1):
 		print "Please enter a filename"
 		sys.exit()
+	
+	raceName = raw_input('Enter the race name: ')
+
+	
+	date = raw_input('Enter the date(in long): ')
+
+	distance = raw_input('Enter the distance:');
+
+	done = False
+	while(not done):
+		unit = raw_input('Enter the unit(miles, kilometers, meters):')
+		if(unit == "miles" or unit == "kilometers" or unit == "meters"):
+			done = True
 		
-	if(len(sys.argv) == 2):
-		print "Please enter a race name"
-		sys.exit()
 	
 	
 	fileName = sys.argv[1]
-	dateIn = sys.argv[2]
-	raceName = sys.argv[3]
-	
-	date = dateIn
 	file = None
 	try:
 		file = open(fileName + ".txt")
@@ -51,7 +53,7 @@ class RunningData():
 		 
 	outFile.write("# RaceResultInfo \n \n");
 	outFile.write("results: \n\n");
-
+	
 	
 	lastTime = 0
 	for index, line in enumerate(lines):
@@ -59,7 +61,7 @@ class RunningData():
 		lineList = line.rsplit();
 		
 		if(len(lineList)  != 0 and lineList[0] == str(count)):
-			outFile.write("	- !!models.RaceResultInfo \n");
+			outFile.write(" - !!models.RaceResultInfo \n");
 			name = lines[index - 2];
 			nameList = name.rsplit();
 			firstName = nameList[1]
@@ -72,11 +74,14 @@ class RunningData():
 			lastTime = seconds
 			out = firstName + " " + lastName + " " + time + " " + str(seconds)
 			
-			toFile  = "		raceName:	" + raceName + "\n"
-			toFile += "		firstName:	" + firstName + "\n"
-			toFile += "		lastName:	" + lastName + "\n"
-			toFile += "		seconds:	" + str(seconds) + "\n"
-			toFile += "		date:	" + str(date) + "\n"
+			toFile  = "     raceName: " + raceName + "\n"
+			toFile += "     firstName: " + firstName + "\n"
+			toFile += "     lastName: " + lastName + "\n"
+			toFile += "     seconds: " + str(seconds) + "\n"
+			toFile += "     date: " + str(date) + "\n"
+			toFile += "     km: " + distance + "\n"
+			toFile += "     displayUnit: " + unit + "\n"
+			
 			
 			outFile.write(toFile + "\n")
 			count+= 1

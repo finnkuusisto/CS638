@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<libraryInfos>
+<libraryInfo home="C:\Users\Owner\Desktop\Desktop\eclipse-jee-helios-SR2-win32\eclipse" version="1.6.0_24">
+<bootpath>
+<entry path="C:\Users\Owner\Desktop\Desktop\eclipse-jee-helios-SR2-win32\eclipse\jre\lib\resources.jar"/>
+<entry path="C:\Users\Owner\Desktop\Desktop\eclipse-jee-helios-SR2-win32\eclipse\jre\lib\rt.jar"/>
+<entry path="C:\Users\Owner\Desktop\Desktop\eclipse-jee-helios-SR2-win32\eclipse\jre\lib\sunrsasign.jar"/>
+<entry path="C:\Users\Owner\Desktop\Desktop\eclipse-jee-helios-SR2-win32\eclipse\jre\lib\jsse.jar"/>
+<entry path="C:\Users\Owner\Desktop\Desktop\eclipse-jee-helios-SR2-win32\eclipse\jre\lib\jce.jar"/>
+<entry path="C:\Users\Owner\Desktop\Desktop\eclipse-jee-helios-SR2-win32\eclipse\jre\lib\charsets.jar"/>
+<entry path="C:\Users\Owner\Desktop\Desktop\eclipse-jee-helios-SR2-win32\eclipse\jre\lib\modules\jdk.boot.jar"/>
+<entry path="C:\Users\Owner\Desktop\Desktop\eclipse-jee-helios-SR2-win32\eclipse\jre\classes"/>
+</bootpath>
+<extensionDirs>
+<entry path="C:\Users\Owner\Desktop\Desktop\eclipse-jee-helios-SR2-win32\eclipse\jre\lib\ext"/>
+<entry path="C:\Windows\Sun\Java\lib\ext"/>
+</extensionDirs>
+<endorsedDirs>
+<entry path="C:\Users\Owner\Desktop\Desktop\eclipse-jee-helios-SR2-win32\eclipse\jre\lib\endorsed"/>
+</endorsedDirs>
+</libraryInfo>
+</libraryInfos>

@@ -31,7 +31,13 @@ public class Global extends GlobalSettings {
     			Map<String,List<Object>> all = 
     					(Map<String,List<Object>>)Yaml.load("initial-data.yml");
     			
+    			
+    			Map<String,List<Object>> raceTimes = 
+    				(Map<String,List<Object>>)Yaml.load("lakefrontdata2010out.yml");
+    		
+    			
                 // Insert all the zip codes
+    			Ebean.save(raceTimes.get("results"));
                 Ebean.save(all.get("zips"));
     			
     			// Insert users first
@@ -65,6 +71,9 @@ public class Global extends GlobalSettings {
                 genRandomEvent(20);
 
     		}
+    	
+    		
+    		
     	}
     	
     	//to generate random unique users
